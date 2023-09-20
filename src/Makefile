@@ -1,4 +1,4 @@
-PROJECT= smartcalc
+PROJECT= s21_smartcalc
 FLAGS= -Werror -Wextra -Wall -std=c11
 LEAKS_CALL=
 OS= $(shell uname -s)
