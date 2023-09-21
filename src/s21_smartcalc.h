@@ -18,26 +18,30 @@
 #define IncorrectValue 2
 #define IncorrectMatrix 3
 
+#define COMMA ','
+#define DOT '.'
+#define NULL_CHAR '\0'
+
 typedef enum {
   number = 1,
   variable = 2,
-  fcos = 3,
-  fsin = 4,
-  ftan = 5,
-  facos = 6,
-  fasin = 7,
-  fatan = 8,
-  fsqrt = 9,
-  fln = 10,
-  flog = 11,
-  obracket = 12,
-  cbracket = 13,
-  oplus = 14,
-  ominus = 15,
-  omult = 16,
-  odiv = 17,
-  omod = 18,
-  opower = 19,
+  oplus = 3,
+  ominus = 4,
+  omult = 5,
+  odiv = 6,
+  omod = 7,
+  opower = 8,
+  fcos = 9,
+  fsin = 10,
+  ftan = 11,
+  facos = 12,
+  fasin = 13,
+  fatan = 14,
+  fsqrt = 15,
+  fln = 16,
+  flog = 17,
+  obracket = 18,
+  cbracket = 19,
   start_S = -1,
   end_S = -2
 } type_t;
@@ -58,9 +62,9 @@ int polish(S **stack);
 int calculate(S **stack, double value, double *result);
 
 // Helper
-int is_number(char *str);
+int is_digit(char *str);
 int is_letter(char *str);
-int get_priority(type_t type);
+int check_priority(type_t type);
 int get_lexem(char **str, S **stack);
 int bush(S **stack_pointer, type_t type, int priority, double value);
 int push(S **stack_head, type_t type, int priority, double value);
