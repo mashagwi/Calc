@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>767</width>
+    <height>441</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="one">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>279</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="two">
+    <property name="geometry">
+     <rect>
+      <x>131</x>
+      <y>279</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>2</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="three">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>280</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>3</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="four">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>229</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>4</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="five">
+    <property name="geometry">
+     <rect>
+      <x>131</x>
+      <y>229</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>5</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="six">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>229</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>6</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="seven">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>179</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>7</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="eight">
+    <property name="geometry">
+     <rect>
+      <x>131</x>
+      <y>179</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>8</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="nine">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>179</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>9</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="zero">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">ditgits</string>
+    </attribute>
+   </widget>
+   <widget class="QLineEdit" name="Input">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>701</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dev">
+    <property name="geometry">
+     <rect>
+      <x>331</x>
+      <y>179</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>/</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">operands</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="mul">
+    <property name="geometry">
+     <rect>
+      <x>331</x>
+      <y>230</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>*</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">operands</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="sub">
+    <property name="geometry">
+     <rect>
+      <x>331</x>
+      <y>280</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">operands</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="plus">
+    <property name="geometry">
+     <rect>
+      <x>331</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">operands</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="equal">
+    <property name="geometry">
+     <rect>
+      <x>231</x>
+      <y>330</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>=</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dot">
+    <property name="geometry">
+     <rect>
+      <x>131</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>.</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sin">
+    <property name="geometry">
+     <rect>
+      <x>431</x>
+      <y>179</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>sin</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="cos">
+    <property name="geometry">
+     <rect>
+      <x>431</x>
+      <y>230</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>cos</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="tan">
+    <property name="geometry">
+     <rect>
+      <x>431</x>
+      <y>279</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>tan</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="log">
+    <property name="geometry">
+     <rect>
+      <x>431</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>log</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="asin">
+    <property name="geometry">
+     <rect>
+      <x>531</x>
+      <y>180</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>asin</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="acos">
+    <property name="geometry">
+     <rect>
+      <x>531</x>
+      <y>229</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>acos</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="atan">
+    <property name="geometry">
+     <rect>
+      <x>531</x>
+      <y>279</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>atan</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="ln">
+    <property name="geometry">
+     <rect>
+      <x>531</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ln</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QLabel" name="result">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>701</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="mod">
+    <property name="geometry">
+     <rect>
+      <x>631</x>
+      <y>329</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>mod</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">operands</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="sqrt">
+    <property name="geometry">
+     <rect>
+      <x>631</x>
+      <y>229</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>sqrt</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="pow">
+    <property name="geometry">
+     <rect>
+      <x>631</x>
+      <y>280</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>pow</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">func</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="clear">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>180</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>c</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="obracket">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>380</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>(</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">brackets</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="Cbracket">
+    <property name="geometry">
+     <rect>
+      <x>631</x>
+      <y>380</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>)</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">brackets</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="x">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>130</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>x</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="graf">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>130</y>
+      <width>100</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>График</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="credit">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>130</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Кредитный калькулятор</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="depos">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>130</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Депозитный калькулятор</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="val">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>140</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="ditgits"/>
+  <buttongroup name="func"/>
+  <buttongroup name="operands"/>
+  <buttongroup name="brackets"/>
+ </buttongroups>
+</ui>
