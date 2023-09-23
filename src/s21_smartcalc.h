@@ -2,6 +2,7 @@
 #define S21_SMARTCALC_H_
 
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -16,7 +17,8 @@
 
 #define IncorrectType 1
 #define IncorrectValue 2
-#define IncorrectMatrix 3
+#define MEMORY_ALLOCATION_ERROR 3
+#define POINTER_TO_NULL 1
 
 #define COMMA ','
 #define DOT '.'
@@ -66,11 +68,12 @@ int is_digit(char *str);
 int is_letter(char *str);
 int check_priority(type_t type);
 int get_lexem(char **str, S **stack);
-int bush(S **stack_pointer, type_t type, int priority, double value);
-int push(S **stack_head, type_t type, int priority, double value);
-int pop(S **stack_head, S **stack_tmp);
-int peek(S **stack_head, S **stack_tmp);
-void reverse(S **stack);
+int bush(S *stack, type_t type, int priority, double value);
+int push(S **stack, type_t type, int priority, double value);
+int pop(S **stack, S *stack_tmp);
+int peek(S **stack, S *stack_tmp);
+void reverse_stack(S **stack);
 void remove_stack(S **stack);
+void print_stack(S **stack);
 
 #endif  // S21_SMARTCAL_H_
