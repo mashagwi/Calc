@@ -1,12 +1,11 @@
 #include "s21_smartcalc.h"
 
-int s21_smartcalc(char *str, double value, double *result) {
-  int err = OK;
-  int count = 0;
-  *result = 0;
+int s21_smartcalc(double *result, char *str, double value) {
   S *stack = NULL;
-
-  err = parser(str, &count, &stack);
+  int err = OK;
+  *result = 0;
+  int variables_count = 0;
+  err = parser(str, &stack, &variables_count);
   if (err == OK) {
     err = calculate(&stack, value, result);
   } else {
@@ -15,156 +14,86 @@ int s21_smartcalc(char *str, double value, double *result) {
   return err;
 }
 
-// int validate(S **stack) {
-//   int err = OK;
-//   int count = 0;
-//   S *tmp = *stack;
-//   int obracket_count = 0;
-//   int cbracket_count = 0;
-//   type_t old_type = start_S;
-//   type_t cur_type = 0;
-//   type_t next_type = 0;
-
-//   while (err == OK && tmp != NULL) {
-//     cur_type = tmp->type;
-//     if (tmp->next != NULL)
-//       next_type = tmp->next->type;
-//     else
-//       next_type = end_S;
-//     if (next_type == end_S && (cur_type >= oplus && cur_type <= obracket)) {
-//       err = IncorrectExp;
-//       break;
-//     } else if (cur_type == oplus || cur_type == ominus) {
-//       if (next_type == ominus || next_type == oplus) {
-//         err = IncorrectExp;
-//         break;
-//       } else if (old_type == start_S ||
-//                  (old_type >= omult && old_type <= opower) ||
-//                  old_type == obracket) {
-//         tmp->type = number;
-//         tmp->priority = check_priority(number);
-//         if (cur_type == ominus)
-//           tmp->value = -1;
-//         else
-//           tmp = 1;
-//         err = bush(tmp, omult, 4, 0);
-//       }
-//     } else if (cur_type >= fsin && cur_type <= flog && next_type != obracket) {
-//       err = IncorrectExp;
-//       break;
-//     } else if (cur_type == obracket) {
-//       if (next_type >= omult && next_type <= opower) {
-//         err = IncorrectExp;
-//         break;
-//       }
-//       obracket_count++;
-//     } else if (cur_type == cbracket) {
-//       if (old_type >= oplus && old_type <= obracket) {
-//         err = IncorrectExp;
-//         break;
-//       } else
-//         cbracket++;
-//     } else if (cur_type == variable || cur_type == number) {
-//       if (next_type == variable || next_type == number ||
-//           (next_type >= fsin && next_type <= obracket)) {
-//         err = bush(tmp, omult, check_priority(omult), 0);
-//       }
-//       if (cur_type == number) count = 1;
-//     }
-//     old_type = tmp->type;
-//     tmp = tmp->next;
-//   }
-//   if (obracket != cbracket) err = IncorrectExp;
-//   if (err == OK) err = count;
-//   return err;
-// }
-
 int validate(S **stack) {
-    int err = OK;
-    S *current_node = *stack;
-    int variable_count = 0;
-    int open_bracket_count = 0;
-    int close_bracket_count = 0;
-    type_t old_type = start_S;
+  int err = OK;
+  S *current_node = *stack;
+  int variable_count = 0;
+  int open_bracket_count = 0;
+  int close_bracket_count = 0;
+  type_t old_type = start_S;
 
-    while (err == OK && current_node != NULL) {
-        type_t cur_type = current_node->type;
-        type_t next_type = (current_node->next != NULL) ? current_node->next->type : end_S;
+  while (err == OK && current_node != NULL) {
+    type_t cur_type = current_node->type;
+    type_t next_type =
+        (current_node->next != NULL) ? current_node->next->type : end_S;
 
-        switch (cur_type) {
-            case oplus:
-            case ominus:
-                if (next_type == ominus || next_type == oplus) {
-                    err = IncorrectExp;
-                } else if (old_type == start_S || (old_type >= omult && old_type <= opower) || old_type == obracket) {
-                    current_node->type = number;
-                    current_node->priority = check_priority(number);
-                    current_node->value = (cur_type == ominus) ? -1 : 1;
-                    err = bush(current_node, omult, 4, 0);
-                }
-                break;
-
-            case fsin:
-            case flog:
-                if (next_type != obracket) {
-                    err = IncorrectExp;
-                }
-                break;
-
-            case obracket:
-                if (next_type >= omult && next_type <= opower) {
-                    err = IncorrectExp;
-                }
-                open_bracket_count++;
-                break;
-
-            case cbracket:
-                if (old_type >= oplus && old_type <= obracket) {
-                    err = IncorrectExp;
-                } else {
-                    close_bracket_count++;
-                }
-                break;
-
-            case variable:
-            case number:
-                if (next_type == variable || next_type == number || (next_type >= fsin && next_type <= obracket)) {
-                    err = bush(current_node, omult, check_priority(omult), 0);
-                }
-                if (cur_type == number) {
-                    variable_count = 1;
-                }
-                break;
-            // case fcos:
-            // case ftan:
-            // case facos:
-            // case fasin:
-            // case fatan:
-            // case fsqrt:
-            // case fln:
-            // case start_S:
-            // case end_S:
-            //     break;
-            default:
-                break;    
+    switch (cur_type) {
+      case oplus:
+      case omin:
+        if (next_type == omin || next_type == oplus) {
+          err = IncorrectExp;
+        } else if (old_type == start_S ||
+                   (old_type >= omult && old_type <= opower) ||
+                   old_type == obracket) {
+          current_node->type = number;
+          current_node->priority = check_priority(number);
+          current_node->value = (cur_type == omin) ? -1 : 1;
+          err = bush(current_node, omult, 4, 0);
         }
+        break;
 
-        old_type = cur_type;
-        current_node = current_node->next;
+      case osin:
+      case olog:
+        if (next_type != obracket) {
+          err = IncorrectExp;
+        }
+        break;
+
+      case obracket:
+        if (next_type >= omult && next_type <= opower) {
+          err = IncorrectExp;
+        }
+        open_bracket_count++;
+        break;
+
+      case cbracket:
+        if (old_type >= oplus && old_type <= obracket) {
+          err = IncorrectExp;
+        } else {
+          close_bracket_count++;
+        }
+        break;
+
+      case variable:
+      case number:
+        if (next_type == variable || next_type == number ||
+            (next_type >= osin && next_type <= obracket)) {
+          err = bush(current_node, omult, check_priority(omult), 0);
+        }
+        if (cur_type == number) {
+          variable_count = 1;
+        }
+        break;
+      default:
+        break;
     }
 
-    if (open_bracket_count != close_bracket_count) {
-        err = IncorrectExp;
-    }
+    old_type = cur_type;
+    current_node = current_node->next;
+  }
 
-    if (err == OK) {
-        err = variable_count;
-    }
+  if (open_bracket_count != close_bracket_count) {
+    err = IncorrectExp;
+  }
 
-    return err;
+  if (err == OK) {
+    err = variable_count;
+  }
+
+  return err;
 }
 
-int parser(char *str, int *count, S **stack) {
+int parser(char *str, S **stack, int *count) {
   int err = OK;
 
   char current_symbol = NULL_CHAR;
@@ -181,7 +110,7 @@ int parser(char *str, int *count, S **stack) {
         }
       }
       if (flag == 0 && !is_letter(str + i + 1)) {
-        if (str[i] == current_symbol || current_symbol == '\0') {
+        if (str[i] == current_symbol || current_symbol == NULL_CHAR) {
           current_symbol = str[i];
         } else {
           err = IncorrectExp;
@@ -216,331 +145,386 @@ int parser(char *str, int *count, S **stack) {
   return err;
 }
 
-int calculate(S **stack, double value, double *result){
+int polish(S **stack) {
+  S *old_stack = *stack;
+  S *new_stack = NULL;
+  S *tmp_stack = NULL;
+  int err = OK;
+  if (err == OK) {
+    while (old_stack != NULL) {
+      S tmp;
+      pop(&old_stack, &tmp);
+      if (tmp.type <= variable) {
+        push(&new_stack, tmp.type, tmp.priority, tmp.value);
+      } else if (tmp.type >= osin && tmp.type <= obracket) {
+        push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
+      } else if (tmp.type >= oplus && tmp.type <= opower) {
+        while (tmp_stack != NULL) {
+          if ((tmp_stack->priority > tmp.priority &&
+               tmp_stack->priority != check_priority(obracket)) ||
+              (tmp_stack->priority == tmp.priority &&
+               (tmp.type == omin ||
+                (tmp.type >= odiv && tmp.type <= opower)))) {
+            S tmp2;
+            pop(&tmp_stack, &tmp2);
+            push(&new_stack, tmp2.type, tmp2.priority, tmp2.value);
+          } else {
+            break;
+          }
+        }
+        push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
+
+        // // Проверка деления на ноль
+        // if (tmp.type == odiv) {
+        //   if (new_stack != NULL && new_stack->value == 0) {
+        //     err = IncorrectExp;
+        //     break;
+        //   }
+        // }
+      } else if (tmp.type == cbracket) {
+        while (tmp_stack != NULL) {
+          if (tmp_stack->type == obracket) {
+            break;
+          } else {
+            S tmp2;
+            pop(&tmp_stack, &tmp2);
+            push(&new_stack, tmp2.type, tmp2.priority, tmp2.value);
+          }
+        }
+        if (tmp_stack == NULL) {
+          err = IncorrectExp;
+          break;
+        } else {
+          S tmp2;
+          pop(&tmp_stack, &tmp2);
+          if (tmp2.type >= osin && tmp2.type <= olog) {
+            pop(&tmp_stack, &tmp2);
+            push(&new_stack, tmp2.type, tmp2.priority, tmp2.value);
+          }
+        }
+      }
+    }
+  }
+  if (NULL != tmp_stack) {
+    if (tmp_stack->type == obracket) {
+      err = IncorrectExp;
+    } else {
+      while (tmp_stack != NULL) {
+        S tmp2;
+        pop(&tmp_stack, &tmp2);
+        push(&new_stack, tmp2.type, tmp2.priority, tmp2.value);
+      }
+    }
+  }
+  if (err != OK) {
+    remove_stack(stack);
+    remove_stack(&new_stack);
+    remove_stack(&tmp_stack);
+  }
+  *stack = new_stack;
+  return err;
+}
+
+int calculate(S **stack, double value, double *result) {
   int err = OK;
   S *tmp_stack = NULL;
   S *old_stack = *stack;
   double tmp_result = 0;
   S tmp, var1, var2;
 
-    while (old_stack != NULL && err == OK) {
-        pop(&old_stack, &tmp);
+  while (old_stack != NULL && err == OK) {
+    pop(&old_stack, &tmp);
 
-        if (tmp.type == variable) {
-            tmp.type = number;
-            tmp.value = value;
-        }
+    if (tmp.type == variable) {
+      tmp.type = number;
+      tmp.value = value;
+    }
 
-        switch (tmp.type) {
-            case number:
-            case variable:
-                err = push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
+    switch (tmp.type) {
+      case number:
+      case variable:
+        err = push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
+        break;
+
+      case oplus:
+      case omin:
+      case omult:
+      case odiv:
+      case omod:
+      case opower:
+        err = pop(&tmp_stack, &var2);
+        if (err == OK) {
+          err = pop(&tmp_stack, &var1);
+          if (err == OK) {
+            switch (tmp.type) {
+              case oplus:
+                tmp_result = var1.value + var2.value;
                 break;
 
-            case oplus:
-            case ominus:
-            case omult:
-            case odiv:
-            case omod:
-            case opower:
-                err = pop(&tmp_stack, &var2);
-                if (err == OK) {
-                    err = pop(&tmp_stack, &var1);
-                    if (err == OK) {
-                        switch (tmp.type) {
-                            case oplus:
-                                tmp_result = var1.value + var2.value;
-                                break;
-
-                            case ominus:
-                                tmp_result = var1.value - var2.value;
-                                break;
-
-                            case omult:
-                                tmp_result = var1.value * var2.value;
-                                break;
-
-                            case odiv:
-                                tmp_result = var1.value / var2.value;
-                                break;
-
-                            case omod:
-                                tmp_result = fmod(var1.value, var2.value);
-                                break;
-
-                            case opower:
-                                tmp_result = pow(var1.value, var2.value);
-                                break;
-
-                            default:
-                                err = IncorrectExp;
-                                break;
-                        }
-                        err = push(&tmp_stack, number, check_priority(number), tmp_result);
-                    } else {
-                        err = IncorrectExp;
-                    }
-                } else {
-                    err = IncorrectExp;
-                }
+              case omin:
+                tmp_result = var1.value - var2.value;
                 break;
 
-            case fsin:
-            case fcos:
-            case ftan:
-            case fasin:
-            case facos:
-            case fatan:
-            case fsqrt:
-            case fln:
-            case flog:
-                err = pop(&tmp_stack, &var1);
-                if (err == OK) {
-                    switch (tmp.type) {
-                        case fsin:
-                            tmp_result = sin(var1.value);
-                            break;
-
-                        case fcos:
-                            tmp_result = cos(var1.value);
-                            break;
-
-                        case ftan:
-                            tmp_result = sin(var1.value) / cos(var1.value);
-                            break;
-
-                        case fasin:
-                            tmp_result = asin(var1.value);
-                            break;
-
-                        case facos:
-                            tmp_result = acos(var1.value);
-                            break;
-
-                        case fatan:
-                            tmp_result = atan(var1.value);
-                            break;
-
-                        case fsqrt:
-                            tmp_result = sqrt(var1.value);
-                            break;
-
-                        case fln:
-                            tmp_result = log(var1.value);
-                            break;
-
-                        case flog:
-                            tmp_result = log10(var1.value);
-                            break;
-
-                        default:
-                            err = IncorrectExp;
-                            break;
-                    }
-                    err = push(&tmp_stack, number, check_priority(number), tmp_result);
-                } else {
-                    err = IncorrectExp;
-                }
+              case omult:
+                tmp_result = var1.value * var2.value;
                 break;
 
-            default:
+              case odiv:
+              
+                if (var2.value != 0) {
+                  tmp_result = var1.value / var2.value;}
+                else {err = IncorrectExp;
+                      break;}
+              break;
+
+              case omod:
+                tmp_result = fmod(var1.value, var2.value);
+                break;
+
+              case opower:
+                tmp_result = pow(var1.value, var2.value);
+                break;
+
+              default:
                 err = IncorrectExp;
                 break;
-        }
-    }
-
-    if (err == OK && tmp_stack != NULL) {
-        S tmp;
-        err = pop(&tmp_stack, &tmp);
-        if (err == OK && tmp_stack == NULL) {
-            *result = tmp.value;
-            *stack = NULL;
-        } else {
+            }
+            err = push(&tmp_stack, number, check_priority(number), tmp_result);
+          } else {
             err = IncorrectExp;
+          }
+        } else {
+          err = IncorrectExp;
         }
-    } else {
+        break;
+
+      case osin:
+      case ocos:
+      case otg:
+      case oasin:
+      case oacos:
+      case oatg:
+      case osqrt:
+      case oln:
+      case olog:
+        err = pop(&tmp_stack, &var1);
+        if (err == OK) {
+          switch (tmp.type) {
+            case osin:
+              tmp_result = sin(var1.value);
+              break;
+
+            case ocos:
+              tmp_result = cos(var1.value);
+              break;
+
+            case otg:
+              tmp_result = sin(var1.value) / cos(var1.value);
+              break;
+
+            case oasin:
+              tmp_result = asin(var1.value);
+              break;
+
+            case oacos:
+              tmp_result = acos(var1.value);
+              break;
+
+            case oatg:
+              tmp_result = atan(var1.value);
+              break;
+
+            case osqrt:
+              tmp_result = sqrt(var1.value);
+              break;
+
+            case oln:
+              tmp_result = log(var1.value);
+              break;
+
+            case olog:
+              tmp_result = log10(var1.value);
+              break;
+
+            default:
+              err = IncorrectExp;
+              break;
+          }
+          err = push(&tmp_stack, number, check_priority(number), tmp_result);
+        } else {
+          err = IncorrectExp;
+        }
+        break;
+
+      default:
         err = IncorrectExp;
+        break;
     }
+  }
 
-    remove_stack(&old_stack);
-    remove_stack(&tmp_stack);
+  if (err == OK && tmp_stack != NULL) {
+    S tmp;
+    err = pop(&tmp_stack, &tmp);
+    if (err == OK && tmp_stack == NULL) {
+      *result = tmp.value;
+      *stack = NULL;
+    } else {
+      err = IncorrectExp;
+    }
+  } else {
+    err = IncorrectExp;
+  }
 
-    return err;
+  remove_stack(&old_stack);
+  remove_stack(&tmp_stack);
+
+  return err;
 }
-
-
 
 int get_lexem(char **str, S **stack) {
   int err = OK;
-  S *stack_result = *stack;
   char *current_char = *str;
+  S *stack_head = *stack;
   int priority = 0;
-  char previous_char = NULL_CHAR;
+  char char_flag = NULL_CHAR;
 
-  while (err == OK && *current_char == ' ') {
-    current_char++;
-  }
   if (*current_char == NULL_CHAR) {
     err = End_of_str;
   } else {
+    while (*current_char == ' ' && err == OK) {
+      current_char++;
+    }
+
     if (is_digit(current_char)) {
-      char *end_char = current_char;
-      double value = strtod(current_char, &end_char);
-      current_char = end_char;
+      char *end_ptr = current_char;
+      double value = strtod(current_char, &end_ptr);
+      current_char = end_ptr;
       priority = check_priority(number);
-      err = push(&stack_result, number, priority, value);
+      err = push(&stack_head, number, priority, value);
       if (err) {
-        remove_stack(&stack_result);
+        remove_stack(&stack_head);
       }
     } else if (is_letter(current_char)) {
-      struct Operation {
-        const char *name;
-        type_t type;
-      };
-
-      struct Operation operations[] = {
-          {"+", oplus},    {"-", ominus},   {"*", omult},   {"/", odiv},
-          {"mod", omod},   {"sin", fsin},   {"cos", fcos},  {"tg", ftan},
-          {"asin", fasin}, {"acos", facos}, {"atg", fatan}, {"sqrt", fsqrt},
-          {"ln", fln},     {"log", flog},
-      };
-      /* цикл for выполняет поиск среди операций (например, "mod",
-       * "sin", "cos", и тд) в строке, начиная с текущей позиции, которая
-       * указана переменной current_char. Цель - проверить, если текущая
-       * подстрока (начиная с current_char) совпадает с какой-либо из известных
-       * операций. Если совпадение найдено, то соответствующая операция
-       * добавляется в стек, а current_char сдвигается на количество символов,
-       * соответствующих операции. Затем цикл завершается с использованием
-       * break.*/
-      for (size_t i = 0; i < sizeof(operations) / sizeof(operations[0]); i++) {
-        if (strncmp(current_char, operations[i].name,
-                    strlen(operations[i].name)) == 0) {
-          priority = check_priority(operations[i].type);
-          err = push(&stack_result, operations[i].type, priority, 0);
-          current_char += strlen(operations[i].name);
-          break;
-        }
-      }
-
-      if (err == OK && !is_letter(current_char + 1)) {
-        if (previous_char == NULL_CHAR || previous_char == *current_char) {
+      if (strncmp(current_char, "mod", 3) == 0) {
+        priority = check_priority(omod);
+        err = push(&stack_head, omod, priority, 0);
+        current_char += 3;
+      } else if (strncmp(current_char, "sin", 3) == 0) {
+        priority = check_priority(osin);
+        err = push(&stack_head, osin, priority, 0);
+        current_char += 3;
+      } else if (strncmp(current_char, "cos", 3) == 0) {
+        priority = check_priority(ocos);
+        err = push(&stack_head, ocos, priority, 0);
+        current_char += 3;
+      } else if (strncmp(current_char, "tg", 2) == 0) {
+        priority = check_priority(otg);
+        err = push(&stack_head, otg, priority, 0);
+        current_char += 2;
+      } else if (strncmp(current_char, "asin", 4) == 0) {
+        priority = check_priority(oasin);
+        err = push(&stack_head, oasin, priority, 0);
+        current_char += 4;
+      } else if (strncmp(current_char, "acos", 4) == 0) {
+        priority = check_priority(oacos);
+        err = push(&stack_head, oacos, priority, 0);
+        current_char += 4;
+      } else if (strncmp(current_char, "atg", 3) == 0) {
+        priority = check_priority(oatg);
+        err = push(&stack_head, oatg, priority, 0);
+        current_char += 3;
+      } else if (strncmp(current_char, "sqrt", 4) == 0) {
+        priority = check_priority(osqrt);
+        err = push(&stack_head, osqrt, priority, 0);
+        current_char += 4;
+      } else if (strncmp(current_char, "ln", 2) == 0) {
+        priority = check_priority(oln);
+        err = push(&stack_head, oln, priority, 0);
+        current_char += 2;
+      } else if (strncmp(current_char, "log", 3) == 0) {
+        priority = check_priority(olog);
+        err = push(&stack_head, olog, priority, 0);
+        current_char += 3;
+      } else if (!is_letter(current_char + 1)) {
+        if (char_flag == '\0' || char_flag == *current_char) {
           priority = check_priority(variable);
-          err = push(&stack_result, variable, priority, 0);
+          err = push(&stack_head, variable, priority, 0);
           current_char++;
         } else {
           err = IncorrectExp;
         }
       }
-      // if (strncmp(current_char, "mod", 3) == 0) {
-      //   priority = check_priority(omod);
-      //   err = push(&stack_result, omod, priority, 0);
-      //   current_char += 3;
-      // } else if (strncmp(current_char, "sin", 3) == 0) {
-      //   priority = check_priority(fsin);
-      //   err = push(&stack_result, fsin, priority, 0);
-      //   current_char += 3;
-      // } else if (strncmp(current_char, "cos", 3) == 0) {
-      //   priority = check_priority(fcos);
-      //   err = push(&stack_result, fcos, priority, 0);
-      //   current_char += 3;
-      // } else if (strncmp(current_char, "tg", 2) == 0) {
-      //   priority = check_priority(ftan);
-      //   err = push(&stack_result, ftg, priority, 0);
-      //   current_char += 2;
-      // } else if (strncmp(current_char, "asin", 4) == 0) {
-      //   priority = check_priority(fasin);
-      //   err = push(&stack_result, fasin, priority, 0);
-      //   current_char += 4;
-      // } else if (strncmp(current_char, "acos", 4) == 0) {
-      //   priority = check_priority(facos);
-      //   err = push(&stack_result, facos, priority, 0);
-      //   current_char += 4;
-      // } else if (strncmp(current_char, "atg", 3) == 0) {
-      //   priority = check_priority(fatan);
-      //   err = push(&stack_result, fatg, priority, 0);
-      //   current_char += 3;
-      // } else if (strncmp(current_char, "sqrt", 4) == 0) {
-      //   priority = check_priority(fsqrt);
-      //   err = push(&stack_result, fsqrt, priority, 0);
-      //   current_char += 4;
-      // } else if (strncmp(current_char, "ln", 2) == 0) {
-      //   priority = check_priority(fln);
-      //   err = push(&stack_result, fln, priority, 0);
-      //   current_char += 2;
-      // } else if (strncmp(current_char, "log", 3) == 0) {
-      //   priority = check_priority(flog);
-      //   err = push(&stack_result, flog, priority, 0);
-      //   current_char += 3;
-      // } else if (!is_letter(current_char + 1)) {
-      //   if (previous_char == NULL_CHAR || previous_char == *current_char) {
-      //     priority = get(variable);
-      //     err = push(&stack_result, variable, priority, 0);
-      //     current_char++;
-      //   } else {
-      //     err = IncorrectExp;
-      //   }
-      // }
     } else {
       switch (*current_char) {
         case '+':
           priority = check_priority(oplus);
+          err = push(&stack_head, oplus, priority, 0);
           break;
+
         case '-':
-          priority = check_priority(ominus);
+          priority = check_priority(omin);
+          err = push(&stack_head, omin, priority, 0);
           break;
+
         case '*':
           priority = check_priority(omult);
+          err = push(&stack_head, omult, priority, 0);
           break;
+
         case '/':
           priority = check_priority(odiv);
+          err = push(&stack_head, odiv, priority, 0);
           break;
+
         case '^':
           priority = check_priority(opower);
+          err = push(&stack_head, opower, priority, 0);
           break;
+
         case '(':
           priority = check_priority(obracket);
+          err = push(&stack_head, obracket, priority, 0);
           break;
+
         case ')':
           priority = check_priority(cbracket);
+          err = push(&stack_head, cbracket, priority, 0);
           break;
+
         default:
           err = IncorrectExp;
           break;
       }
-      if (err == OK) {
-        err = push(&stack_result, (type_t)*current_char, priority, 0);
-        current_char++;
-        if (err) {
-          remove_stack(&stack_result);
-        }
+      current_char++;
+      if (err) {
+        remove_stack(&stack_head);
       }
     }
-    previous_char = *current_char;
   }
-  *stack = stack_result;
+  *stack = stack_head;
   *str = current_char;
   return err;
 }
 
 int check_priority(type_t type) {
-  int res = -1;
+  int response = -1;
+  if ((type < number) || (type > cbracket)) {
+    response = -1;
+  } else if (type <= number) {
+    response = 0;
+  } else if (type <= omin) {
+    response = 1;
+  } else if (type <= omod) {
+    response = 2;
+  } else if (type <= opower) {
+    response = 3;
+  } else if (type <= olog) {
+    response = 4;
+  } else if (type <= cbracket) {
+    response = 5;
+  }
 
-  if (type < number || type > cbracket)
-    res = -1;
-  else if (type == number)
-    res = 0;
-  else if (type <= ominus)
-    res = 1;
-  else if (type <= omod)
-    res = 2;
-  else if (type <= opower)
-    res = 3;
-  else if (type <= flog)
-    res = 4;
-  else if (type <= cbracket)
-    res = 5;
-
-  return res;
+  return response;
 }
 
 int is_letter(char *str) {
@@ -556,13 +540,113 @@ int is_digit(char *str) {
   return res;
 }
 
-void print_stack(S **stack) {
-  S *current = *stack;
-  while (current != NULL) {
-    printf("Type:%d", current->type);
-    if (current->type == number) printf("number:%f", current->value);
-    printf("\n");
+// void print_stack(S **stack) {
+//   S *current = *stack;
+//   while (current != NULL) {
+//     printf("Type:%d", current->type);
+//     if (current->type == number) printf("number:%f", current->value);
+//     printf("\n");
 
-    current = current->next;
+//     current = current->next;
+//   }
+// }
+
+int push(S **stack, type_t type, int priority, double value) {
+  // Проверка корректности типа элемента
+  if (type < number || type > cbracket) {
+    return IncorrectType;
   }
+
+  // Выделение памяти под новый элемент
+  S *new_element = calloc(1, sizeof(S));
+  if (new_element == NULL) {
+    return MEMORY_ALLOCATION_ERROR;
+  }
+
+  // Инициализация нового элемента
+  new_element->priority = priority;
+  new_element->type = type;
+  new_element->value = value;
+
+  // Добавление нового элемента в стек
+  new_element->next = *stack;
+  *stack = new_element;
+
+  return OK;
+}
+
+int pop(S **stack, S *Smp) {
+  // Проверка наличия элементов в стеке
+  if (*stack == NULL) {
+    return POINTER_TO_NULL;
+  }
+
+  // Извлечение значения из вершины стека
+  S *stack_head = *stack;
+  Smp->priority = stack_head->priority;
+  Smp->type = stack_head->type;
+  Smp->value = stack_head->value;
+
+  // Удаление верхнего элемента стека и обновление указателя на вершину стека
+  *stack = stack_head->next;
+  free(stack_head);
+
+  // Очистка ссылки на следующий элемент в буфере
+  Smp->next = NULL;
+
+  return OK;
+}
+
+int bush(S *stack, type_t type, int priority, double value) {
+  // Проверка корректности указателя на элемент стека
+  if (stack == NULL) {
+    return POINTER_TO_NULL;
+  }
+
+  // Проверка корректности типа элемента
+  if (type < number || type > cbracket) {
+    return IncorrectType;
+  }
+
+  // Проверка корректности значения
+  if (isnan(value) || isinf(value)) {
+    return IncorrectType;
+  }
+
+  // Выделение памяти под новый элемент
+  S *new_element = calloc(1, sizeof(S));
+  if (new_element == NULL) {
+    return MEMORY_ALLOCATION_ERROR;
+  }
+
+  // Инициализация нового элемента
+  new_element->priority = priority;
+  new_element->type = type;
+  new_element->value = value;
+
+  // Вставка нового элемента в стек
+  new_element->next = stack->next;
+  stack->next = new_element;
+
+  return OK;
+}
+
+void remove_stack(S **stack) {
+  S *stack_head = *stack;
+  while (NULL != stack_head) {
+    S *next = stack_head->next;
+    free(stack_head);
+    stack_head = next;
+  }
+  *stack = stack_head;
+}
+
+void reverse_stack(S **stack) {
+  S *tmp_stack = NULL;
+  while (*stack != NULL) {
+    S tmp_value;
+    pop(stack, &tmp_value);
+    push(&tmp_stack, tmp_value.type, tmp_value.priority, tmp_value.value);
+  }
+  *stack = tmp_stack;
 }

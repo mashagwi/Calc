@@ -120,5 +120,5 @@ clean:
 	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info
 
 lib: clean $(PROJECT_NAME).a
-	gcc $(FLAGS) main.c $(PROJECT_NAME).a
+	gcc $(FLAGS) main.c $(PROJECT_NAME).a -lm
 	./a.out 

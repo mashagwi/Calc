@@ -1,217 +1,142 @@
-#include "../../s21_smartcalc.h"
-#include "../../credit.h"
-#include "../../deposit.h"
+#include "s21_smartcalc.h"
 
-#test use_1
-  char input[]="sin(3)";
+#test normal1
+  char input[]="cos(6*3)/5";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 0.14112000806, EPS);
+  ck_assert_double_eq_tol(result, 0.1320633, EPSILON);
 
-#test use_01
+#test normal
   char input[]="4*- 1";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -4, EPS);
+  ck_assert_double_eq_tol(result, -4, EPSILON);
 
-#test use_2
+#test normal2
   char input[]="14mod3^sin(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 1);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 1.39758733594, EPS);
+  ck_assert_double_eq_tol(result, 1.39758733594, EPSILON);
 
-#test use_3
+#test normal3
   char input[]="14mod3/sin(2x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 2);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -2.64269741762, EPS);
+  ck_assert_double_eq_tol(result, -2.64269741762, EPSILON);
 
-#test use_4
+#test normal4
   char input[]="(14mod3^sin(x))";
   double result = 0;
   int response = s21_smartcalc(&result, input, 1);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 1.39758733594, EPS);
+  ck_assert_double_eq_tol(result, 1.39758733594, EPSILON);
 
-#test use_5
-  char input[]="4*-1";
+#test normal5
+  char input[]="2+(-(-(-(-1))))";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -4, EPS);
+  ck_assert_double_eq_tol(result, 3, EPSILON);
 
-#test use_6
-  char input[]="tg(x)";
+#test normal6
+  char input[]="sqrt(cos(sin(2+9*6^1.2-tg(x))))mod0.1";
   double result = 0;
-  int response = s21_smartcalc(&result, input, 1.6);
+  int response = s21_smartcalc(&result, input, 1);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -34.2325327356, EPS);
+  ck_assert_double_eq_tol(result, 0.0615000, EPSILON);
 
-#test use_7
-  char input[]="ctg(x)";
+#test normal61
+  char input[]="-5.0mod(-3.0)";
   double result = 0;
-  int response = s21_smartcalc(&result, input, 1.6);
+  int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -0.02921197819, EPS);
+  ck_assert_double_eq_tol(result, -2, EPSILON);
 
-#test use_8
+#test normal8
   char input[]="cos(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 1.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -0.0291995223, EPS);
+  ck_assert_double_eq_tol(result, -0.0291995223, EPSILON);
 
-#test use_9
+#test normal9
   char input[]="asin(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 0.643501109, EPS);
+  ck_assert_double_eq_tol(result, 0.643501109, EPSILON);
 
-#test use_10
+#test normal10
   char input[]="acos(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 0.927295218, EPS);
+  ck_assert_double_eq_tol(result, 0.927295218, EPSILON);
 
-#test use_11
+#test normal11
   char input[]="atg(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 0.5404195, EPS);
+  ck_assert_double_eq_tol(result, 0.5404195, EPSILON);
 
-#test use_12
-  char input[]="actg(x)";
-  double result = 0;
-  int response = s21_smartcalc(&result, input, 0.6);
-  ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 1.03037683, EPS);
 
-#test use_13
+#test normal13
   char input[]="sqrt(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 0.77459666924, EPS);
+  ck_assert_double_eq_tol(result, 0.77459666924, EPSILON);
 
-#test use_14
+#test normal14
   char input[]="ln(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -0.51082562376 , EPS);
+  ck_assert_double_eq_tol(result, -0.51082562376 , EPSILON);
 
-#test use_15
+#test normal15
   char input[]="log(x)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, -0.22184874961, EPS);
+  ck_assert_double_eq_tol(result, -0.22184874961, EPSILON);
 
-#test use_16
-  char input[]="1+1";
+#test normal51
+  char input[]="1+2+(3*4)+(5.1+6.8)";
+  double result = 0;
+  int response = s21_smartcalc(&result, input, 0);
+  ck_assert_int_eq(response, OK);
+  ck_assert_double_eq_tol(result, 26.9, EPSILON);
+
+#test normal16
+  char input[]="305+436";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0.6);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 2, EPS);
+  ck_assert_double_eq_tol(result, 741, EPSILON);
 
-#test use_17
-  char input[]="11-2";
-  double result = 0;
-  int response = s21_smartcalc(&result, input, 0.6);
-  ck_assert_int_eq(response, OK);
-  ck_assert_double_eq_tol(result, 9, EPS);
-
-#test nan1
-  char input[]="-sin(3)^actg(x)";
+#test normal17
+  char input[]="1/2";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, OK);
-  ck_assert_double_nan(result);
+  ck_assert_double_eq_tol(result, 0.5, EPSILON);
 
-#test invalid1
-  char input[]="-+sin(3)";
+
+#test incorrect1
+  char input[]="---+cos(1)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
-  ck_assert_int_eq(response, INVALID_EXPRESSION);
+  ck_assert_int_eq(response, IncorrectExp);
 
-  #test invalid2
-  char input[]="sin(3";
+  #test incorrect2
+  char input[]="tg2)";
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
-  ck_assert_int_eq(response, INVALID_EXPRESSION);
+  ck_assert_int_eq(response, IncorrectExp);
 
-
-  #test cr_use_1
-    double sum = 1000000;
-    int date = 1;
-    double percent = 12;
-    int credit_type = ANNUITET;
-    double* monthly_pay = NULL;
-    double over_pay = 0;
-    double total_pay = 0;
-    int response = calc_credit(sum, &date, 1, percent, credit_type, &monthly_pay, &over_pay, &total_pay);
-    ck_assert_int_eq(response, OK);
-    free(monthly_pay);
-    monthly_pay = NULL;
-
-  #test cr_use_2
-    double sum = 1000000;
-    int date = 12;
-    double percent = 12;
-    int credit_type = DIFFERENT;
-    double* monthly_pay = NULL;
-    double over_pay = 0;
-    double total_pay = 0;
-    int response = calc_credit(sum, &date, 0, percent, credit_type, &monthly_pay, &over_pay, &total_pay);
-    ck_assert_int_eq(response, OK);
-    free(monthly_pay);
-    monthly_pay = NULL;
-
-
-  #test dep_use_1
-    long double sum = 1000000;
-    int date = 12;
-    long double percent = 12;
-    long double tax = 12;
-    int payment_period = 1;
-    int cap_type = 0;
-    double* in_arr = calloc(12, sizeof(double));
-    double* out_arr = calloc(12, sizeof(double));
-    long double dep_result = 0;
-    long double total_tax = 0;
-
-    int response = calc_deposit(&sum, date, percent, tax, payment_period, cap_type, in_arr, out_arr, &dep_result, &total_tax);
-    ck_assert_int_eq(response, OK);
-    free(in_arr);
-    free(out_arr);
-    in_arr = NULL;
-    out_arr = NULL;
-
-  #test dep_use_2
-    long double sum = 1000000;
-    int date = 12;
-    long double percent = 12;
-    long double tax = 12;
-    int payment_period = 1;
-    int cap_type = 1;
-    double* in_arr = calloc(12, sizeof(double));
-    double* out_arr = calloc(12, sizeof(double));
-    long double dep_result = 0;
-    long double total_tax = 0;
-
-    int response = calc_deposit(&sum, date, percent, tax, payment_period, cap_type, in_arr, out_arr, &dep_result, &total_tax);
-    ck_assert_int_eq(response, OK);
-    free(in_arr);
-    free(out_arr);
-    in_arr = NULL;
-    out_arr = NULL;
-
-#main-pre
-  srunner_set_fork_status (sr, CK_NOFORK);
