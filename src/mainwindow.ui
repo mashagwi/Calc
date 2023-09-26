@@ -306,7 +306,7 @@
      <string notr="true">func</string>
     </attribute>
    </widget>
-   <widget class="QPushButton" name="tan">
+   <widget class="QPushButton" name="tg">
     <property name="geometry">
      <rect>
       <x>431</x>
@@ -316,7 +316,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>tan</string>
+     <string>tg</string>
     </property>
     <attribute name="buttonGroup">
      <string notr="true">func</string>
@@ -370,7 +370,7 @@
      <string notr="true">func</string>
     </attribute>
    </widget>
-   <widget class="QPushButton" name="atan">
+   <widget class="QPushButton" name="atg">
     <property name="geometry">
      <rect>
       <x>531</x>
@@ -380,7 +380,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>atan</string>
+     <string>atg</string>
     </property>
     <attribute name="buttonGroup">
      <string notr="true">func</string>
@@ -576,8 +576,8 @@
  <connections/>
  <buttongroups>
   <buttongroup name="ditgits"/>
-  <buttongroup name="func"/>
-  <buttongroup name="operands"/>
   <buttongroup name="brackets"/>
+  <buttongroup name="operands"/>
+  <buttongroup name="func"/>
  </buttongroups>
 </ui>

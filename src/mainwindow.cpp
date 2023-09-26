@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
     AllPButtons.removeOne(ui->graf);
     AllPButtons.removeOne(ui->credit);
     AllPButtons.removeOne(ui->depos);
+//    AllPButtons.removeOne(ui->cos);
+//    AllPButtons.removeOne(ui->sin);
+//    AllPButtons.removeOne(ui->tg);
+//    AllPButtons.removeOne(ui->acos);
+//    AllPButtons.removeOne(ui->asin);
+//    AllPButtons.removeOne(ui->atg);
 
     for(int i = 0; i<AllPButtons.length(); i++) {
         connect(AllPButtons[i], SIGNAL(clicked()), this, SLOT(AllPButtons_clicked()));
@@ -39,8 +45,28 @@ void MainWindow::on_clear_released()
 }
 
 void MainWindow::AllPButtons_clicked(){
+
     QPushButton *button = (QPushButton *)sender();
-    ui->Input->setText(ui->Input->text() + button->text());
+    if(ui->ditgits->buttons().contains(button)) {
+    ui->Input->setText(ui->Input->text() + button->text());}
+
+    if(ui->func->buttons().contains(button)) {
+    ui->Input->setText(ui->Input->text() + button->text() + '(');}
+
+    if(ui->operands->buttons().contains(button)) {
+        ui->Input->setText(ui->Input->text() + button->text());}
+
+    else if(ui->brackets->buttons().contains(button)) {
+        if(button ->text() == "(")
+            countLeftBrackets++;
+        else
+            countRightBrackets++;
+        ui->Input->setText(ui->Input->text() + button->text());
+
+    } else if (ui->dot == button) {
+        ui->Input->setText(ui->Input->text() + ".");
+    }
+
 }
 
 //void MainWindow::on_zero_clicked()
@@ -51,13 +77,13 @@ void MainWindow::AllPButtons_clicked(){
 //}
 
 
-void MainWindow::on_zero_released()
-{
-    ui->Input->insert(ui->zero->text());
-}
+//void MainWindow::on_zero_released()
+//{
+//    ui->Input->insert(ui->zero->text());
+//}
 
-void MainWindow::on_one_released()
-{
-    ui->Input->insert(ui->one->text());
-}
+//void MainWindow::on_one_released()
+//{
+//    ui->Input->insert(ui->one->text());
+//}
 

@@ -23,13 +23,16 @@ class MainWindow : public QMainWindow {
 
   //    void on_zero_clicked();
 
-  void on_zero_released();
+//  void on_zero_released();
 
   void AllPButtons_clicked();
 
-  void on_one_released();
+//  void on_one_released();
 
  private:
   Ui::MainWindow *ui;
+
+  int countLeftBrackets = 0;
+  int countRightBrackets = 0;
 };
 #endif  // MAINWINDOW_H
