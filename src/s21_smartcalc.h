@@ -23,6 +23,36 @@
 #define DOT '.'
 #define NULL_CHAR '\0'
 
+/*
+s21_smartcalc — это приложение, которое позволяет вам вычислять некоторые
+математические выражения. Этот калькулятор состоит из трех разделов:
+1. Калькулятор
+Программа может принимать и вычислять любые выражения в
+инфиксной нотации, а также строить график функции, если в выражении есть
+переменная. Область определения такой функции от -10 до 10.
+2. Кредитный калькулятор
+Программа может рассчитывать проценты, переплату и ежемесячные
+платежи по кредиту.
+3. Депозитный калькулятор
+Программа может рассчитывать выгоду от вкладов различных типов.
+
+Сборка и удаление
+Для установки программы запустите команду make all или make install.
+Для удаления программы воспользуйтесь make uninstal. Для удаления
+всех промежуточных файлов воспользуйтесь командой make clean.
+Для запуска unit-тестов используйте команду make test.
+Для генерации отчета о покрытии тестами используйте команду make
+gcov_report
+Для архивации исходного кода программы используйте make dist
+
+*/
+
+/* Список типов type_t лексем, определяет все возможные типы,
+которые мы можем получить при анализе строки выражения.
+Это включает числа, операторы (сложение, вычитание, умножение, деление,
+возведение в степень, остаток от деления), фунции, а также открывающую и
+закрывающую скобки.
+*/
 typedef enum {
   number = 1,
   variable = 2,
@@ -49,6 +79,9 @@ typedef enum {
 
 typedef struct S S;
 
+/* Структура S используется для хранения информации о лексем. Она содержит ее
+ * значение, тип, приоритет и указатель на следующую позицию. */
+
 struct S {
   S *next;
   double value;
@@ -57,23 +90,42 @@ struct S {
 };
 
 int s21_smartcalc(double *result, char *string, double value);
+/*
+ * Функция для проверки корректности элементов стека
+ */
 int validate(S **stack);
+/*
+ * Функция парсинга строки
+ */
 int parser(char *str, S **stack, int *count);
-// int parser(char *str, S **stack, int *variables_count);
+/*
+ * Конвертирует стек в польскую нотацию
+ */
 int polish(S **stack);
+/*
+ * Вычисляет выражение
+ */
 int calculate(S **stack, double value, double *result);
 
-// Helper
-int is_digit(char *str);
-int is_letter(char *str);
-int check_priority(type_t type);
-int get_lexem(char **str, S **stack);
+/*
+ * Понадобится несколько функций для работы со стеком:
+ * bush - функция для добавления элемента в стек после указателя
+ * push - функция для добавления элемента вверх стека
+ * pop - функция для удаления и возврата последнего элемента стека
+ * remove_stack - для освобождения памяти, выделенной под стек
+ * get_lexem - для получения следующей лексемы из строки и добавления в стек
+ */
+
 int bush(S *stack, type_t type, int priority, double value);
 int push(S **stack, type_t type, int priority, double value);
 int pop(S **stack, S *stack_tmp);
-
-void reverse_stack(S **stack);
+int get_lexem(char **str, S **stack);
 void remove_stack(S **stack);
+void reverse_stack(S **stack);
+int is_digit(char *str);
+int is_letter(char *str);
+int check_priority(type_t type);
+
 void print_stack(S **stack);
 
 #endif  // S21_SMARTCAL_H_

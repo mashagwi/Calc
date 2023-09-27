@@ -5,6 +5,12 @@ CHECKFL = $(shell pkg-config --cflags --libs check)
 
 all: $(PROJECT_NAME).a
 
+install: clean build
+	build; qmake ../SmartCalc/s21_smartcalc.pro && make && rm -f Makefile
+
+uninstall:
+	rm -rf build* 
+
 $(PROJECT_NAME).a: clean
 	gcc -c $(FLAGS) $(PROJECT_NAME).c -o $(PROJECT_NAME).o
 	ar rc $(PROJECT_NAME).a $(PROJECT_NAME).o
@@ -24,14 +30,22 @@ gcov_report:
 	genhtml s21_test.info --output-directory report
 	open report/index.html
 
+dvi:
+	# brew install doxygen	
+	# doxygen Doxyfile 2> /dev/null && open doxygen/html/index.html
+
+dist: clean
+	tar -zcf s21_smartcalc.tar.gz ./*
+
+clean:
+	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info
 format: 
 	clang-format -style=Google -i *.c *.h
 
 style: 
 	clang-format -style=Google -n *.c *.h
 
-clean:
-	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info
+
 
 lib: clean $(PROJECT_NAME).a
 	gcc $(FLAGS) main.c $(PROJECT_NAME).a -lm

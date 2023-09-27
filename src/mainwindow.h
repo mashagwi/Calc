@@ -4,6 +4,14 @@
 #include <QMainWindow>
 #include <QRegularExpressionValidator>
 
+#ifdef __cplusplus
+    extern "C"{
+#endif
+        #include "s21_smartcalc.h"
+#ifdef __cplusplus
+    }
+#endif
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -21,15 +29,11 @@ class MainWindow : public QMainWindow {
 
   void on_clear_released();
 
-  //    void on_zero_clicked();
-
-//  void on_zero_released();
-
   void AllPButtons_clicked();
 
-//  void on_one_released();
+//  void on_equal_clicked();
 
- private:
+private:
   Ui::MainWindow *ui;
 
   int countLeftBrackets = 0;
