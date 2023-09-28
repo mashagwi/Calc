@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define M_PI 3.14159265358979323846264338327950288
 #define EPSILON 0.000001
 
 #define OK 0

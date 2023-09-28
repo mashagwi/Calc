@@ -1,4 +1,6 @@
 #include "s21_smartcalc.h"
+#include "credit.h"
+#include "deposit.h"
 
 #test normal1
   char input[]="cos(6*3)/5";
@@ -139,4 +141,70 @@
   double result = 0;
   int response = s21_smartcalc(&result, input, 0);
   ck_assert_int_eq(response, IncorrectExp);
+
+#test cr_normal1
+    double sum = 1000000;
+    int date = 1;
+    double percent = 12;
+    int credit_type = ANNUITET;
+    double* monthly_pay = NULL;
+    double over_pay = 0;
+    double total_pay = 0;
+    int response = calculate_credit(sum, &date, 1, percent, credit_type, &monthly_pay, &over_pay, &total_pay);
+    ck_assert_int_eq(response, OK);
+    free(monthly_pay);
+    monthly_pay = NULL;
+
+  #test cr_normal2
+    double sum = 1000000;
+    int date = 12;
+    double percent = 12;
+    int credit_type = DIFFERENT;
+    double* monthly_pay = NULL;
+    double over_pay = 0;
+    double total_pay = 0;
+    int response = calculate_credit(sum, &date, 0, percent, credit_type, &monthly_pay, &over_pay, &total_pay);
+    ck_assert_int_eq(response, OK);
+    free(monthly_pay);
+    monthly_pay = NULL;
+
+
+
+#test dep_normal1
+    long double sum = 1000000;
+    int date = 12;
+    long double percent = 12;
+    long double tax = 12;
+    int payment_period = 1;
+    int cap_type = 0;
+    double* in_arr = calloc(12, sizeof(double));
+    double* out_arr = calloc(12, sizeof(double));
+    long double dep_result = 0;
+    long double total_tax = 0;
+
+    int response = calculate_deposit(&sum, date, percent, tax, payment_period, cap_type, in_arr, out_arr, &dep_result, &total_tax);
+    ck_assert_int_eq(response, OK);
+    free(in_arr);
+    free(out_arr);
+    in_arr = NULL;
+    out_arr = NULL;
+
+  #test dep_normal2
+    long double sum = 1000000;
+    int date = 12;
+    long double percent = 12;
+    long double tax = 12;
+    int payment_period = 1;
+    int cap_type = 1;
+    double* in_arr = calloc(12, sizeof(double));
+    double* out_arr = calloc(12, sizeof(double));
+    long double dep_result = 0;
+    long double total_tax = 0;
+
+    int response = calculate_deposit(&sum, date, percent, tax, payment_period, cap_type, in_arr, out_arr, &dep_result, &total_tax);
+    ck_assert_int_eq(response, OK);
+    free(in_arr);
+    free(out_arr);
+    in_arr = NULL;
+    out_arr = NULL;
 

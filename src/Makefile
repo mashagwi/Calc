@@ -1,7 +1,8 @@
-
 PROJECT_NAME= s21_smartcalc
 FLAGS= -Wall -Wextra -Werror
 CHECKFL = $(shell pkg-config --cflags --libs check)
+SRC = $(PROJECT_NAME).c credit.c deposit.c
+
 
 all: $(PROJECT_NAME).a
 
@@ -13,32 +14,37 @@ uninstall:
 
 $(PROJECT_NAME).a: clean
 	gcc -c $(FLAGS) $(PROJECT_NAME).c -o $(PROJECT_NAME).o
-	ar rc $(PROJECT_NAME).a $(PROJECT_NAME).o
+	gcc -c $(FLAGS) credit.c -o credit.o
+	gcc -c $(FLAGS) deposit.c -o deposit.o
+	ar rc $(PROJECT_NAME).a $(PROJECT_NAME).o credit.o deposit.o
 	ranlib $(PROJECT_NAME).a
+
 
 test: $(PROJECT_NAME).a
 	checkmk $(PROJECT_NAME).check > $(PROJECT_NAME)_test.c
-	gcc $(FLAGS) $(PROJECT_NAME)_test.c $(PROJECT_NAME).a  -o s21_test $(CHECKFL)
+	gcc $(FLAGS) $(SRC) $(PROJECT_NAME)_test.c $(PROJECT_NAME).a -o s21_test $(CHECKFL)
 	./s21_test
+
 
 gcov_report:
 	checkmk $(PROJECT_NAME).check > $(PROJECT_NAME)_test.c
 	gcc -c $(FLAGS) $(PROJECT_NAME)_test.c -o $(PROJECT_NAME)_test.o
-	gcc $(FLAGS) --coverage $(PROJECT_NAME)_test.o $(PROJECT_NAME).c  -o s21_test $(CHECKFL)
+	gcc $(FLAGS) --coverage $(PROJECT_NAME)_test.o $(SRC) -o s21_test $(CHECKFL)
 	./s21_test
 	lcov -d ./ --capture --output-file s21_test.info
 	genhtml s21_test.info --output-directory report
 	open report/index.html
-
+	
 dvi:
 	# brew install doxygen	
 	# doxygen Doxyfile 2> /dev/null && open doxygen/html/index.html
 
 dist: clean
-	tar -zcf s21_smartcalc.tar.gz ./*
-
+	tar -zcf s21_smartcalc.tgz ./*
+	
 clean:
-	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info
+	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz
+
 format: 
 	clang-format -style=Google -i *.c *.h
 
