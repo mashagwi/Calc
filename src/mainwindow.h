@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QRegularExpressionValidator>
+#include <QString>
+#include <QtWidgets/QMainWindow>
+#include <sstream>
 
 #ifdef __cplusplus
     extern "C"{
@@ -31,7 +34,7 @@ class MainWindow : public QMainWindow {
 
   void AllPButtons_clicked();
 
-//  void on_equal_clicked();
+  void on_equal_clicked();
 
 private:
   Ui::MainWindow *ui;
