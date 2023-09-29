@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_clear_released()
 {
-    ui->Input->clear();
+    ui->input->clear();
     ui->result->clear();
     ui->widgetplot->clearGraphs();
 }
@@ -42,30 +42,30 @@ void MainWindow::AllPButtons_clicked(){
 
     QPushButton *button = (QPushButton *)sender();
     if(ui->ditgits->buttons().contains(button)) {
-    ui->Input->setText(ui->Input->text() + button->text());}
+    ui->input->insertPlainText(ui->input->toPlainText() + button->text());}
 
     if(ui->func->buttons().contains(button)) {
-    ui->Input->setText(ui->Input->text() + button->text() + '(');}
+    ui->input->insertPlainText(ui->input->toPlainText()  + button->text() + '(');}
 
     if(ui->operands->buttons().contains(button)) {
-        ui->Input->setText(ui->Input->text() + button->text());}
+        ui->input->insertPlainText(ui->input->toPlainText() + button->text());}
 
     else if(ui->brackets->buttons().contains(button)) {
         if(button ->text() == "(")
             countLeftBrackets++;
         else
             countRightBrackets++;
-        ui->Input->setText(ui->Input->text() + button->text());
+        ui->input->insertPlainText(ui->input->toPlainText() + button->text());
 
     } else if (ui->dot == button) {
-        ui->Input->setText(ui->Input->text() + ".");
+        ui->input->insertPlainText(ui->input->toPlainText() + ".");
     }
 
 }
 
 void MainWindow::on_equal_clicked(){
 
-//    QString str = ui->Input->text();  // забираем текст из строки ввода
+//    QString str = ui->input->text();  // забираем текст из строки ввода
 //    QByteArray ba = str.toLocal8Bit();  // переводим строку в массив байтов
 //    const char *chars = ba.data();  // переводим массив байтов в строку си
 //    operas *operas = NULL;
@@ -75,7 +75,7 @@ void MainWindow::on_equal_clicked(){
     S *stack = NULL;
     double res = 0;
     int variables_count = 0;
-    QString input = ui->Input->toPlainText().toLower();
+    QString input = ui->input->toPlainText().toLower();
     std::string expression = input.toStdString().c_str();
     err = parser((char *)input.toStdString().c_str(), &stack, &variables_count);
        if (err == OK) {
@@ -117,8 +117,6 @@ void MainWindow::on_equal_clicked(){
     ui->result->append("Invalid expression");
     }
     remove_stack(&stack);
-
-
 
 }
 

@@ -18,25 +18,28 @@
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLineEdit" name="Input">
+       <widget class="QPlainTextEdit" name="input">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>35</height>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
          </size>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="result">
+       <widget class="QTextBrowser" name="result">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>35</height>
+          <height>25</height>
          </size>
-        </property>
-        <property name="text">
-         <string/>
         </property>
        </widget>
       </item>
