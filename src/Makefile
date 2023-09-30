@@ -36,14 +36,13 @@ gcov_report:
 	open report/index.html
 	
 dvi:
-	# brew install doxygen	
-	# doxygen Doxyfile 2> /dev/null && open doxygen/html/index.html
+	doxygen Doxyfile
 
 dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
 	
 clean:
-	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz
+	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build
 
 format: 
 	clang-format -style=Google -i *.c *.h

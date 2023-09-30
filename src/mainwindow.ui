@@ -6,402 +6,394 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>891</width>
-    <height>433</height>
+    <width>800</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="1">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QPlainTextEdit" name="input">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="result">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="4" column="5">
-           <widget class="QPushButton" name="log">
-            <property name="text">
-             <string>log</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QPushButton" name="sin">
-            <property name="text">
-             <string>sin</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="5">
-           <widget class="QPushButton" name="atg">
-            <property name="text">
-             <string>atg</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="eight">
-            <property name="text">
-             <string>8</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QPushButton" name="sub">
-            <property name="text">
-             <string>-</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">operands</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="4" column="4">
-           <widget class="QPushButton" name="acos">
-            <property name="text">
-             <string>acos</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="4">
-           <widget class="QPushButton" name="tg">
-            <property name="text">
-             <string>tg</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="three">
-            <property name="text">
-             <string>3</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="obracket">
-            <property name="text">
-             <string>(</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">brackets</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="credit">
-            <property name="text">
-             <string>Credit</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QPushButton" name="four">
-            <property name="text">
-             <string>4</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="clear">
-            <property name="text">
-             <string>c</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="mod">
-            <property name="text">
-             <string>mod</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">operands</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QPushButton" name="pow">
-            <property name="text">
-             <string>pow</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="x">
-            <property name="text">
-             <string>x</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="five">
-            <property name="text">
-             <string>5</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QPushButton" name="one">
-            <property name="text">
-             <string>1</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="Cbracket">
-            <property name="text">
-             <string>)</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">brackets</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QPushButton" name="zero">
-            <property name="text">
-             <string>0</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QPushButton" name="six">
-            <property name="text">
-             <string>6</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QPushButton" name="dot">
-            <property name="text">
-             <string>.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QPushButton" name="dev">
-            <property name="text">
-             <string>/</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">operands</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QPushButton" name="mul">
-            <property name="text">
-             <string>*</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">operands</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="plus">
-            <property name="text">
-             <string>+</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">operands</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="graf">
-            <property name="text">
-             <string>Graf</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="5">
-           <widget class="QPushButton" name="ln">
-            <property name="text">
-             <string>ln</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QPushButton" name="cos">
-            <property name="text">
-             <string>cos</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="depos">
-            <property name="text">
-             <string>Depos</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="val"/>
-          </item>
-          <item row="3" column="4">
-           <widget class="QPushButton" name="asin">
-            <property name="text">
-             <string>asin</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="seven">
-            <property name="text">
-             <string>7</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="5">
-           <widget class="QPushButton" name="sqrt">
-            <property name="text">
-             <string>sqrt</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">func</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QPushButton" name="two">
-            <property name="text">
-             <string>2</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QPushButton" name="equal">
-            <property name="text">
-             <string>=</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="nine">
-            <property name="text">
-             <string>9</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">ditgits</string>
-            </attribute>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QCustomPlot" name="widgetplot" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>400</width>
-            <height>300</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <widget class="QTabWidget" name="Calc">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>10</y>
+      <width>791</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+QTabWidget{
+
+background-color:rgb(210, 220, 210);
+
+color:black;
+
+}
+
+</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="calc">
+     <attribute name="title">
+      <string>Calculate</string>
+     </attribute>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>150</y>
+        <width>411</width>
+        <height>270</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="x">
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="nine">
+         <property name="text">
+          <string>9</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="tg">
+         <property name="text">
+          <string>tg</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="four">
+         <property name="text">
+          <string>4</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QPushButton" name="dot">
+         <property name="text">
+          <string>.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="two">
+         <property name="text">
+          <string>2</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="asin">
+         <property name="text">
+          <string>asin</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="sin">
+         <property name="text">
+          <string>sin</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="zero">
+         <property name="text">
+          <string>0</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="one">
+         <property name="text">
+          <string>1</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="plus">
+         <property name="text">
+          <string>+</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">operant</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QPushButton" name="six">
+         <property name="text">
+          <string>6</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QPushButton" name="sub">
+         <property name="text">
+          <string>-</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">operant</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="seven">
+         <property name="text">
+          <string>7</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QPushButton" name="div">
+         <property name="text">
+          <string>/</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">operant</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="cos">
+         <property name="text">
+          <string>cos</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="clear">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+
+background-color:rgb(255, 170, 120);
+
+color:black;
+
+}
+
+
+
+QPushButton: pressed{
+
+background-color:qlineagradient(x1: 0, y1: 0, x2:0, y2:1, stop: 0 rgb (255, 180, 140), stop: 1 rgb (255, 182, 150));
+
+}</string>
+         </property>
+         <property name="text">
+          <string>AC</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="atg">
+         <property name="text">
+          <string>atg</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="five">
+         <property name="text">
+          <string>5</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QPushButton" name="obracket">
+         <property name="text">
+          <string>(</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">brackets</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="equal">
+         <property name="styleSheet">
+          <string notr="true">QPushButton{
+
+background-color:rgb(160, 255, 170);
+
+color:black;
+
+}
+
+QPushButton: pressed{
+
+background-color:qlineagradient(x1: 0, y1: 0, x2:0, y2:1, stop: 0 rgb (160, 275, 190), stop: 1 rgb (160, 280, 200));
+
+}</string>
+         </property>
+         <property name="text">
+          <string>=</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="mod">
+         <property name="text">
+          <string>mod</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">operant</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="acos">
+         <property name="text">
+          <string>acos</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="sqrt">
+         <property name="text">
+          <string>sqrt</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QPushButton" name="three">
+         <property name="text">
+          <string>3</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="eight">
+         <property name="text">
+          <string>8</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">digit</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QPushButton" name="mult">
+         <property name="text">
+          <string>*</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">operant</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QPushButton" name="cbracket">
+         <property name="text">
+          <string>)</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">brackets</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QTextBrowser" name="result">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>431</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="input">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>431</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="credit">
+     <attribute name="title">
+      <string>Credit</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="deposit">
+     <attribute name="title">
+      <string>Deposit</string>
+     </attribute>
+    </widget>
+   </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="ditgits"/>
-  <buttongroup name="brackets"/>
-  <buttongroup name="operands"/>
+  <buttongroup name="digit"/>
+  <buttongroup name="operant"/>
   <buttongroup name="func"/>
+  <buttongroup name="brackets"/>
  </buttongroups>
 </ui>
