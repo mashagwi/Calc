@@ -19,6 +19,10 @@ private slots:
     void on_clear_released();
     void AllButtons_clicked();
 
+    void on_Graph_toggled(bool checked);
+
+    void on_Calc_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
 };

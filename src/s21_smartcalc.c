@@ -174,13 +174,6 @@ int polish(S **stack) {
         }
         push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
 
-        // // Проверка деления на ноль
-        // if (tmp.type == odiv) {
-        //   if (new_stack != NULL && new_stack->value == 0) {
-        //     err = IncorrectExp;
-        //     break;
-        //   }
-        // }
       } else if (tmp.type == cbracket) {
         while (tmp_stack != NULL) {
           if (tmp_stack->type == obracket) {
@@ -270,12 +263,14 @@ int calculate(S **stack, double value, double *result) {
                 break;
 
               case odiv:
-              
+
                 if (var2.value != 0) {
-                  tmp_result = var1.value / var2.value;}
-                else {err = IncorrectExp;
-                      break;}
-              break;
+                  tmp_result = var1.value / var2.value;
+                } else {
+                  err = IncorrectExp;
+                  break;
+                }
+                break;
 
               case omod:
                 tmp_result = fmod(var1.value, var2.value);
