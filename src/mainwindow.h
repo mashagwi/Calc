@@ -7,9 +7,17 @@
 #include <QtWidgets/QMainWindow>
 #include <sstream>
 
-extern "C" {
-    #include "s21_smartcalc.h"
-}
+//extern "C" {
+//    #include "s21_smartcalc.h"
+//}
+
+#ifdef __cplusplus
+    extern "C"{
+#endif
+        #include "s21_smartcalc.h"
+#ifdef __cplusplus
+    }
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,7 +33,10 @@ public:
 
 private slots:
     void on_clear_released();
+
     void AllButtons_clicked();
+
+    void on_x_clicked();
 
     void on_Graph_toggled(bool checked);
 

@@ -70,7 +70,7 @@ int validate(S **stack) {
             (next_type >= osin && next_type <= obracket)) {
           err = bush(current_node, omult, check_priority(omult), 0);
         }
-        if (cur_type == number) {
+        if (cur_type == variable) {
           variable_count = 1;
         }
         break;
