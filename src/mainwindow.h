@@ -15,6 +15,7 @@
     extern "C"{
 #endif
         #include "s21_smartcalc.h"
+        #include "credit.h"
 #ifdef __cplusplus
     }
 #endif
@@ -43,6 +44,10 @@ private slots:
     void on_Calc_tabBarClicked(int index);
 
     void on_equal_clicked();
+
+    void on_calcCredit_clicked();
+
+    void on_remove_clicked();
 
 private:
     Ui::MainWindow *ui;

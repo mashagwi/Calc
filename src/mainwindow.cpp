@@ -18,6 +18,11 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i = 0; i<AllButtons.length(); i++) {
             connect(AllButtons[i], SIGNAL(clicked()), this, SLOT(AllButtons_clicked()));
         }
+
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(
+                   QRegularExpression("[-,+]?[0-9]*[.]?[0-9]*"), this);
+
+        ui->value->setValidator(validator);
 }
 
 MainWindow::~MainWindow()
@@ -29,6 +34,7 @@ void MainWindow::on_clear_released()
 {
     ui->input->clear();
     ui->result->clear();
+    ui->value->clear();
     ui->widgetplot->clearPlottables();
     ui->widgetplot->replot();
 }
@@ -77,7 +83,7 @@ void MainWindow::on_Calc_tabBarClicked(int index)
                setFixedSize(530, 450);
            }
        } else if (index == 1) {
-           setFixedSize(950, 480);
+           setFixedSize(850, 480);
        } else if (index == 2) {
            setFixedSize(1000, 400);
        }
@@ -107,6 +113,19 @@ void MainWindow::on_equal_clicked()
                 }
             } else if (variables_count == 1) {
                 ui->result->clear();
+                if (ui->value->text().isEmpty()) {
+                    ui->result->append("enter a value");
+                } else {
+                   err = calculate(&stack, ui->value->text().toDouble(), &res);
+                   if (err == OK) {
+                       ui->result->clear();
+                       ui->result->append(QString::number(res));
+                   } else {
+                       ui->result->clear();
+                       ui->result->append("Fail");
+                   }
+                }
+
                 int arr_size = 1000;
                 QVector<double> x(arr_size), y(arr_size);
                 for (int i = 0; i < arr_size; i++) {
@@ -135,9 +154,52 @@ void MainWindow::on_equal_clicked()
         remove_stack(&stack);
 }
 
+void MainWindow::on_calcCredit_clicked()
+{
+    ui->calcGraph->setRowCount(0);
+    double sum = ui->sumCredit->toPlainText().toDouble();
+    int date = ui->dateCredit->value();
+    int date_type = ui->dateType->currentIndex();
+    double percent = ui->persentCredit->toPlainText().toDouble();
+    int pay_type = ui->diffi->isChecked();
+    double *m_pay = NULL;
+    double over_pay = 0;
+    double total_pay = 0;
+    int ret = calculate_credit(sum, &date, date_type, percent, pay_type, &m_pay, &over_pay, &total_pay);
+    if (ret == OK){
+        std::stringstream op,tp;
+        char buff[1000] = "";
+        std::sprintf(buff, "%.2lf", over_pay);
+        op << buff;
+        ui->overSum->setText(QString::fromStdString( op.str()));
+
+        std::sprintf(buff, "%.2lf", total_pay);
+        tp << buff;
+        ui->totalSum->setText(QString::fromStdString(tp.str()));
+
+        for(int i = 0; i < date; i++){
+            ui->calcGraph->insertRow(i);
+            ui->calcGraph->setItem(i, 0, new QTableWidgetItem(QString::number(m_pay[i])));
+        }
+
+        if(m_pay != NULL) {
+            free(m_pay);
+            m_pay = NULL;
+        }
+    } else {
+        ui->totalSum->setText("Fail");
+        ui->overSum->clear();
+    }
+}
 
 
-
-
-
+void MainWindow::on_remove_clicked()
+{
+    ui->dateCredit->clear();
+    ui->sumCredit->clear();
+    ui->persentCredit->clear();
+    ui->overSum->clear();
+    ui->totalSum->clear();
+    ui->calcGraph->setRowCount(0);
+}
 

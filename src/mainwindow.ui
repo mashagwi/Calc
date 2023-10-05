@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="Calc">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>20</y>
+      <x>10</x>
+      <y>10</y>
       <width>971</width>
       <height>461</height>
      </rect>
@@ -52,7 +52,7 @@
      <enum>QTabWidget::Triangular</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -152,13 +152,6 @@
          <attribute name="buttonGroup">
           <string notr="true">digit</string>
          </attribute>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="x">
-         <property name="text">
-          <string>X</string>
-         </property>
         </widget>
        </item>
        <item row="0" column="2">
@@ -308,6 +301,9 @@ background-color:qlineagradient(x1: 0, y1: 0, x2:0, y2:1, stop: 0 rgb (160, 275,
          <property name="text">
           <string>=</string>
          </property>
+         <property name="shortcut">
+          <string>Return</string>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -384,6 +380,46 @@ background-color:qlineagradient(x1: 0, y1: 0, x2:0, y2:1, stop: 0 rgb (255, 180,
          </property>
         </widget>
        </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="x">
+         <property name="text">
+          <string>x</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>^</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">func</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>                    x =</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="value">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QTextBrowser" name="result">
@@ -447,15 +483,23 @@ QPlainTextEdit {
      <attribute name="title">
       <string>Credit</string>
      </attribute>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="calcGraph">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>430</x>
         <y>0</y>
-        <width>501</width>
+        <width>311</width>
         <height>401</height>
        </rect>
       </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>170</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Ежемесячный платеж</string>
+       </property>
+      </column>
      </widget>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
@@ -629,7 +673,12 @@ QPlainTextEdit {
          </property>
          <item>
           <property name="text">
-           <string>месяцев</string>
+           <string extracomment="1">месяцев</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string extracomment="2">лет</string>
           </property>
          </item>
         </widget>
@@ -656,7 +705,7 @@ QPlainTextEdit {
           </size>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -669,7 +718,7 @@ QPlainTextEdit {
           </size>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -709,8 +758,8 @@ QPlainTextEdit {
  <connections/>
  <buttongroups>
   <buttongroup name="digit"/>
-  <buttongroup name="operant"/>
   <buttongroup name="func"/>
+  <buttongroup name="operant"/>
   <buttongroup name="brackets"/>
  </buttongroups>
 </ui>
