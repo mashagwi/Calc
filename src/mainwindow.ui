@@ -804,7 +804,7 @@ QPlainTextEdit {
        </rect>
       </property>
      </widget>
-     <widget class="QComboBox" name="dep_type_period">
+     <widget class="QComboBox" name="dep_payment_period">
       <property name="geometry">
        <rect>
         <x>30</x>

@@ -183,7 +183,13 @@ void MainWindow::on_remove_clicked()
     ui->calcGraph->setRowCount(0);
 }
 
+void MainWindow::on_pushButton_input_add_released() {
+  ui->inputDep->insertRow(ui->inputDep->rowCount());
+}
 
+void MainWindow::on_pushButton_input_rm_released() {
+  ui->inputDep->setRowCount(0);
+}
 
 
 void MainWindow::updateTableWidgetsRowCount(int total_month) {
@@ -270,7 +276,7 @@ void MainWindow::on_calcDep_clicked()
       long double percent = ui->dep_percent->toPlainText().toDouble();
       long double tax = ui->dep_tax->toPlainText().toDouble();
       int payment_period = 0;
-      switch (ui->dep_type_period->currentIndex()) {
+      switch (ui->dep_payment_period->currentIndex()) {
         case 0:
           payment_period = 1;
           break;
