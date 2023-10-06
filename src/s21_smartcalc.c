@@ -264,12 +264,9 @@ int calculate(S **stack, double value, double *result) {
 
               case odiv:
 
-                if (var2.value != 0) {
+
                   tmp_result = var1.value / var2.value;
-                } else {
-                  err = IncorrectExp;
-                  break;
-                }
+
                 break;
 
               case omod:

@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     credit.c \
+    deposit.c \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     credit.h \
+    deposit.h \
     mainwindow.h \
     qcustomplot.h \
     s21_smartcalc.h

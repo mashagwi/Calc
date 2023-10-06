@@ -16,6 +16,7 @@
 #endif
         #include "s21_smartcalc.h"
         #include "credit.h"
+        #include "deposit.h"
 #ifdef __cplusplus
     }
 #endif
@@ -48,6 +49,19 @@ private slots:
     void on_calcCredit_clicked();
 
     void on_remove_clicked();
+
+    void updateTableWidgetsRowCount(int total_month);
+
+    void on_dep_date_valueChanged(int arg1);
+
+    void on_dep_date_type_currentIndexChanged(int index);
+
+    void on_removeDep_clicked();
+
+    void on_calcDep_clicked();
+
+
+//    void on_calcDep_released();
 
 private:
     Ui::MainWindow *ui;
