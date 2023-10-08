@@ -2,27 +2,27 @@
 
 int s21_smartcalc(double *result, char *str, double value) {
   S *stack = NULL;
-  int err = OK;
+  int ret = OK;
   *result = 0;
   int variables_count = 0;
-  err = parser(str, &stack, &variables_count);
-  if (err == OK) {
-    err = calculate(&stack, value, result);
+  ret = parser(str, &stack, &variables_count);
+  if (ret == OK) {
+    ret = calculate(&stack, value, result);
   } else {
     remove_stack(&stack);
   }
-  return err;
+  return ret;
 }
 
 int validate(S **stack) {
-  int err = OK;
+  int ret = OK;
   S *current_node = *stack;
   int variable_count = 0;
   int open_bracket_count = 0;
   int close_bracket_count = 0;
   type_t old_type = start_S;
 
-  while (err == OK && current_node != NULL) {
+  while (ret == OK && current_node != NULL) {
     type_t cur_type = current_node->type;
     type_t next_type =
         (current_node->next != NULL) ? current_node->next->type : end_S;
@@ -31,34 +31,34 @@ int validate(S **stack) {
       case oplus:
       case omin:
         if (next_type == omin || next_type == oplus) {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         } else if (old_type == start_S ||
                    (old_type >= omult && old_type <= opower) ||
                    old_type == obracket) {
           current_node->type = number;
           current_node->priority = check_priority(number);
           current_node->value = (cur_type == omin) ? -1 : 1;
-          err = bush(current_node, omult, 4, 0);
+          ret = bush(current_node, omult, 4, 0);
         }
         break;
 
       case osin:
       case olog:
         if (next_type != obracket) {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         }
         break;
 
       case obracket:
         if (next_type >= omult && next_type <= opower) {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         }
         open_bracket_count++;
         break;
 
       case cbracket:
         if (old_type >= oplus && old_type <= obracket) {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         } else {
           close_bracket_count++;
         }
@@ -68,7 +68,7 @@ int validate(S **stack) {
       case number:
         if (next_type == variable || next_type == number ||
             (next_type >= osin && next_type <= obracket)) {
-          err = bush(current_node, omult, check_priority(omult), 0);
+          ret = bush(current_node, omult, check_priority(omult), 0);
         }
         if (cur_type == variable) {
           variable_count = 1;
@@ -83,18 +83,18 @@ int validate(S **stack) {
   }
 
   if (open_bracket_count != close_bracket_count) {
-    err = IncorrectExp;
+    ret = IncorrectExp;
   }
 
-  if (err == OK) {
-    err = variable_count;
+  if (ret == OK) {
+    ret = variable_count;
   }
 
-  return err;
+  return ret;
 }
 
 int parser(char *str, S **stack, int *count) {
-  int err = OK;
+  int ret = OK;
 
   char current_symbol = NULL_CHAR;
   S *lexem_stack = NULL;
@@ -113,44 +113,44 @@ int parser(char *str, S **stack, int *count) {
         if (str[i] == current_symbol || current_symbol == NULL_CHAR) {
           current_symbol = str[i];
         } else {
-          err = IncorrectExp;
+          ret = IncorrectExp;
           break;
         }
       }
     }
   }
 
-  while (err == OK) {
-    err = get_lexem(&str_tmp, &lexem_stack);
+  while (ret == OK) {
+    ret = get_lexem(&str_tmp, &lexem_stack);
   }
 
-  if (err == OK || err == End_of_str) {
-    err = OK;
+  if (ret == OK || ret == End_of_str) {
+    ret = OK;
     reverse_stack(&lexem_stack);
     *count = validate(&lexem_stack);
     if (*count == 0 || *count == 1) {
-      err = polish(&lexem_stack);
+      ret = polish(&lexem_stack);
       reverse_stack(&lexem_stack);
     } else {
-      err = IncorrectExp;
+      ret = IncorrectExp;
       remove_stack(&lexem_stack);
     }
   } else {
-    err = IncorrectExp;
+    ret = IncorrectExp;
     remove_stack(&lexem_stack);
   }
 
   *stack = lexem_stack;
 
-  return err;
+  return ret;
 }
 
 int polish(S **stack) {
   S *old_stack = *stack;
   S *new_stack = NULL;
   S *tmp_stack = NULL;
-  int err = OK;
-  if (err == OK) {
+  int ret = OK;
+  if (ret == OK) {
     while (old_stack != NULL) {
       S tmp;
       pop(&old_stack, &tmp);
@@ -185,7 +185,7 @@ int polish(S **stack) {
           }
         }
         if (tmp_stack == NULL) {
-          err = IncorrectExp;
+          ret = IncorrectExp;
           break;
         } else {
           S tmp2;
@@ -200,7 +200,7 @@ int polish(S **stack) {
   }
   if (NULL != tmp_stack) {
     if (tmp_stack->type == obracket) {
-      err = IncorrectExp;
+      ret = IncorrectExp;
     } else {
       while (tmp_stack != NULL) {
         S tmp2;
@@ -209,23 +209,23 @@ int polish(S **stack) {
       }
     }
   }
-  if (err != OK) {
+  if (ret != OK) {
     remove_stack(stack);
     remove_stack(&new_stack);
     remove_stack(&tmp_stack);
   }
   *stack = new_stack;
-  return err;
+  return ret;
 }
 
 int calculate(S **stack, double value, double *result) {
-  int err = OK;
+  int ret = OK;
   S *tmp_stack = NULL;
   S *old_stack = *stack;
   double tmp_result = 0;
   S tmp, var1, var2;
 
-  while (old_stack != NULL && err == OK) {
+  while (old_stack != NULL && ret == OK) {
     pop(&old_stack, &tmp);
 
     if (tmp.type == variable) {
@@ -236,7 +236,7 @@ int calculate(S **stack, double value, double *result) {
     switch (tmp.type) {
       case number:
       case variable:
-        err = push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
+        ret = push(&tmp_stack, tmp.type, tmp.priority, tmp.value);
         break;
 
       case oplus:
@@ -245,10 +245,10 @@ int calculate(S **stack, double value, double *result) {
       case odiv:
       case omod:
       case opower:
-        err = pop(&tmp_stack, &var2);
-        if (err == OK) {
-          err = pop(&tmp_stack, &var1);
-          if (err == OK) {
+        ret = pop(&tmp_stack, &var2);
+        if (ret == OK) {
+          ret = pop(&tmp_stack, &var1);
+          if (ret == OK) {
             switch (tmp.type) {
               case oplus:
                 tmp_result = var1.value + var2.value;
@@ -264,8 +264,7 @@ int calculate(S **stack, double value, double *result) {
 
               case odiv:
 
-
-                  tmp_result = var1.value / var2.value;
+                tmp_result = var1.value / var2.value;
 
                 break;
 
@@ -278,15 +277,15 @@ int calculate(S **stack, double value, double *result) {
                 break;
 
               default:
-                err = IncorrectExp;
+                ret = IncorrectExp;
                 break;
             }
-            err = push(&tmp_stack, number, check_priority(number), tmp_result);
+            ret = push(&tmp_stack, number, check_priority(number), tmp_result);
           } else {
-            err = IncorrectExp;
+            ret = IncorrectExp;
           }
         } else {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         }
         break;
 
@@ -299,8 +298,8 @@ int calculate(S **stack, double value, double *result) {
       case osqrt:
       case oln:
       case olog:
-        err = pop(&tmp_stack, &var1);
-        if (err == OK) {
+        ret = pop(&tmp_stack, &var1);
+        if (ret == OK) {
           switch (tmp.type) {
             case osin:
               tmp_result = sin(var1.value);
@@ -339,51 +338,51 @@ int calculate(S **stack, double value, double *result) {
               break;
 
             default:
-              err = IncorrectExp;
+              ret = IncorrectExp;
               break;
           }
-          err = push(&tmp_stack, number, check_priority(number), tmp_result);
+          ret = push(&tmp_stack, number, check_priority(number), tmp_result);
         } else {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         }
         break;
 
       default:
-        err = IncorrectExp;
+        ret = IncorrectExp;
         break;
     }
   }
 
-  if (err == OK && tmp_stack != NULL) {
+  if (ret == OK && tmp_stack != NULL) {
     S tmp;
-    err = pop(&tmp_stack, &tmp);
-    if (err == OK && tmp_stack == NULL) {
+    ret = pop(&tmp_stack, &tmp);
+    if (ret == OK && tmp_stack == NULL) {
       *result = tmp.value;
       *stack = NULL;
     } else {
-      err = IncorrectExp;
+      ret = IncorrectExp;
     }
   } else {
-    err = IncorrectExp;
+    ret = IncorrectExp;
   }
 
   remove_stack(&old_stack);
   remove_stack(&tmp_stack);
 
-  return err;
+  return ret;
 }
 
 int get_lexem(char **str, S **stack) {
-  int err = OK;
+  int ret = OK;
   char *current_char = *str;
   S *stack_head = *stack;
   int priority = 0;
   char char_flag = NULL_CHAR;
 
   if (*current_char == NULL_CHAR) {
-    err = End_of_str;
+    ret = End_of_str;
   } else {
-    while (*current_char == ' ' && err == OK) {
+    while (*current_char == ' ' && ret == OK) {
       current_char++;
     }
 
@@ -392,110 +391,110 @@ int get_lexem(char **str, S **stack) {
       double value = strtod(current_char, &end_ptr);
       current_char = end_ptr;
       priority = check_priority(number);
-      err = push(&stack_head, number, priority, value);
-      if (err) {
+      ret = push(&stack_head, number, priority, value);
+      if (ret) {
         remove_stack(&stack_head);
       }
     } else if (is_letter(current_char)) {
       if (strncmp(current_char, "mod", 3) == 0) {
         priority = check_priority(omod);
-        err = push(&stack_head, omod, priority, 0);
+        ret = push(&stack_head, omod, priority, 0);
         current_char += 3;
       } else if (strncmp(current_char, "sin", 3) == 0) {
         priority = check_priority(osin);
-        err = push(&stack_head, osin, priority, 0);
+        ret = push(&stack_head, osin, priority, 0);
         current_char += 3;
       } else if (strncmp(current_char, "cos", 3) == 0) {
         priority = check_priority(ocos);
-        err = push(&stack_head, ocos, priority, 0);
+        ret = push(&stack_head, ocos, priority, 0);
         current_char += 3;
       } else if (strncmp(current_char, "tg", 2) == 0) {
         priority = check_priority(otg);
-        err = push(&stack_head, otg, priority, 0);
+        ret = push(&stack_head, otg, priority, 0);
         current_char += 2;
       } else if (strncmp(current_char, "asin", 4) == 0) {
         priority = check_priority(oasin);
-        err = push(&stack_head, oasin, priority, 0);
+        ret = push(&stack_head, oasin, priority, 0);
         current_char += 4;
       } else if (strncmp(current_char, "acos", 4) == 0) {
         priority = check_priority(oacos);
-        err = push(&stack_head, oacos, priority, 0);
+        ret = push(&stack_head, oacos, priority, 0);
         current_char += 4;
       } else if (strncmp(current_char, "atg", 3) == 0) {
         priority = check_priority(oatg);
-        err = push(&stack_head, oatg, priority, 0);
+        ret = push(&stack_head, oatg, priority, 0);
         current_char += 3;
       } else if (strncmp(current_char, "sqrt", 4) == 0) {
         priority = check_priority(osqrt);
-        err = push(&stack_head, osqrt, priority, 0);
+        ret = push(&stack_head, osqrt, priority, 0);
         current_char += 4;
       } else if (strncmp(current_char, "ln", 2) == 0) {
         priority = check_priority(oln);
-        err = push(&stack_head, oln, priority, 0);
+        ret = push(&stack_head, oln, priority, 0);
         current_char += 2;
       } else if (strncmp(current_char, "log", 3) == 0) {
         priority = check_priority(olog);
-        err = push(&stack_head, olog, priority, 0);
+        ret = push(&stack_head, olog, priority, 0);
         current_char += 3;
       } else if (!is_letter(current_char + 1)) {
         if (char_flag == '\0' || char_flag == *current_char) {
           priority = check_priority(variable);
-          err = push(&stack_head, variable, priority, 0);
+          ret = push(&stack_head, variable, priority, 0);
           current_char++;
         } else {
-          err = IncorrectExp;
+          ret = IncorrectExp;
         }
       }
     } else {
       switch (*current_char) {
         case '+':
           priority = check_priority(oplus);
-          err = push(&stack_head, oplus, priority, 0);
+          ret = push(&stack_head, oplus, priority, 0);
           break;
 
         case '-':
           priority = check_priority(omin);
-          err = push(&stack_head, omin, priority, 0);
+          ret = push(&stack_head, omin, priority, 0);
           break;
 
         case '*':
           priority = check_priority(omult);
-          err = push(&stack_head, omult, priority, 0);
+          ret = push(&stack_head, omult, priority, 0);
           break;
 
         case '/':
           priority = check_priority(odiv);
-          err = push(&stack_head, odiv, priority, 0);
+          ret = push(&stack_head, odiv, priority, 0);
           break;
 
         case '^':
           priority = check_priority(opower);
-          err = push(&stack_head, opower, priority, 0);
+          ret = push(&stack_head, opower, priority, 0);
           break;
 
         case '(':
           priority = check_priority(obracket);
-          err = push(&stack_head, obracket, priority, 0);
+          ret = push(&stack_head, obracket, priority, 0);
           break;
 
         case ')':
           priority = check_priority(cbracket);
-          err = push(&stack_head, cbracket, priority, 0);
+          ret = push(&stack_head, cbracket, priority, 0);
           break;
 
         default:
-          err = IncorrectExp;
+          ret = IncorrectExp;
           break;
       }
       current_char++;
-      if (err) {
+      if (ret) {
         remove_stack(&stack_head);
       }
     }
   }
   *stack = stack_head;
   *str = current_char;
-  return err;
+  return ret;
 }
 
 int check_priority(type_t type) {

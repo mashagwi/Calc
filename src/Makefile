@@ -6,11 +6,12 @@ SRC = $(PROJECT_NAME).c credit.c deposit.c
 
 all: $(PROJECT_NAME).a
 
-install: clean build
-	build; qmake ../SmartCalc/s21_smartcalc.pro && make && rm -f Makefile
+install:
+	mkdir ../build
+	cd ../build; qmake ../src/SmartCalc.pro && make 
 
 uninstall:
-	rm -rf build* 
+	rm -rf ../build* 
 
 $(PROJECT_NAME).a: clean
 	gcc -c $(FLAGS) $(PROJECT_NAME).c -o $(PROJECT_NAME).o
@@ -36,21 +37,20 @@ gcov_report:
 	open report/index.html
 	
 dvi:
-	cd docs/ && doxygen Doxyfile && cd..
+	cd docs/ && doxygen Doxyfile && open html/index.html & cd ..
 
 dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
 	
 clean:
 	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build
+	cd docs; rm -rf html latex
 
 format: 
 	clang-format -style=Google -i *.c *.h
 
 style: 
 	clang-format -style=Google -n *.c *.h
-
-
 
 lib: clean $(PROJECT_NAME).a
 	gcc $(FLAGS) main.c $(PROJECT_NAME).a -lm
