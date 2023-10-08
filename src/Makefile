@@ -36,7 +36,7 @@ gcov_report:
 	open report/index.html
 	
 dvi:
-	doxygen Doxyfile
+	cd docs/ && doxygen Doxyfile && cd..
 
 dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
