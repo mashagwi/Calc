@@ -50,10 +50,6 @@ private slots:
 
     void on_remove_clicked();
 
-    void on_pushButton_input_add_released();
-
-    void on_pushButton_input_rm_released();
-
     void updateTableWidgetsRowCount(int total_month);
 
     void on_dep_date_valueChanged(int arg1);
@@ -65,7 +61,6 @@ private slots:
     void on_calcDep_clicked();
 
 
-//    void on_calcDep_released();
 
 private:
     Ui::MainWindow *ui;

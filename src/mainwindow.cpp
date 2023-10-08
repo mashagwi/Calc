@@ -182,13 +182,6 @@ void MainWindow::on_remove_clicked()
     ui->calcGraph->setRowCount(0);
 }
 
-void MainWindow::on_pushButton_input_add_released() {
-  ui->inputDep->insertRow(ui->inputDep->rowCount());
-}
-
-void MainWindow::on_pushButton_input_rm_released() {
-  ui->inputDep->setRowCount(0);
-}
 
 
 void MainWindow::updateTableWidgetsRowCount(int total_month) {
@@ -201,23 +194,13 @@ void MainWindow::on_dep_date_valueChanged(int arg1)
     int total_month = arg1;
        if (ui->dep_date_type->currentIndex() == 1) total_month *= 12;
        updateTableWidgetsRowCount(total_month);
+
        for (int i = 0; i < total_month; i++) {
            QTableWidgetItem* newItem = new QTableWidgetItem("0");
+           QTableWidgetItem* newItem2 = new QTableWidgetItem("0");
            ui->inputDep->setItem(i, 0, newItem);
-           ui->outputDep->setItem(i, 0, newItem);
+           ui->outputDep->setItem(i, 0, newItem2);
        }
-//    ui->inputDep->setRowCount(0);
-//    ui->outputDep->setRowCount(0);
-//    int total_month = arg1;
-//    if (ui->dep_date_type->currentIndex() == 1) total_month *= 12;
-//    ui->inputDep->setRowCount(total_month);
-//    ui->outputDep->setRowCount(total_month);
-//    for (int i = 0; i < total_month; i++) {
-//        QTableWidgetItem *newItem = new QTableWidgetItem();
-//        newItem->text().append("0");
-//        ui->inputDep->setItem(i, 0, newItem);
-//        ui->outputDep->setItem(i, 0, newItem);
-//      }
 }
 
 void MainWindow::on_dep_date_type_currentIndexChanged(int index)
@@ -264,6 +247,7 @@ void MainWindow::on_calcDep_clicked()
           }
           if (ui->outputDep->item(i, 0) != nullptr) {
             out_val = ui->outputDep->item(i, 0)->text().toDouble();
+//            ui->outputDep->item(i, 0)->setText(QString::number(out_val, 'f', 2));
           }
           input_arr[i] = in_val;
           output_arr[i] = out_val;
@@ -329,8 +313,5 @@ void MainWindow::on_calcDep_clicked()
 
 
 
-//void MainWindow::on_calcDep_released()
-//{
 
-//}
 

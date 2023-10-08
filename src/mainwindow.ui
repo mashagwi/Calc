@@ -1093,6 +1093,11 @@ QPlainTextEdit {
         <height>192</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string> Сумма</string>
+       </property>
+      </column>
      </widget>
     </widget>
    </widget>
