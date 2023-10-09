@@ -12,8 +12,9 @@
 #define TAX_DIVISOR 100.0
 
 int calculate_deposit(long double *sum, int date, long double percent,
-                 long double tax, int payment_period, int capitalisation_type,
-                 double *input_arr, double *output_arr, long double *dep_result,
-                 long double *total_tax);
+                      long double tax, int payment_period,
+                      int capitalisation_type, double *input_arr,
+                      double *output_arr, long double *dep_result,
+                      long double *total_tax);
 
 #endif

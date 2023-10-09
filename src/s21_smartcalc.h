@@ -101,6 +101,4 @@ int is_digit(char *str);
 int is_letter(char *str);
 int check_priority(type_t type);
 
-void print_stack(S **stack);
-
 #endif  // S21_SMARTCAL_H_

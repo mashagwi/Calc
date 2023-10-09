@@ -2,7 +2,12 @@ PROJECT_NAME= s21_smartcalc
 FLAGS= -Wall -Wextra -Werror
 CHECKFL = $(shell pkg-config --cflags --libs check)
 SRC = $(PROJECT_NAME).c credit.c deposit.c
-
+OS = $(shell uname)
+ifeq ($(OS), Linux)
+OPEN_CMD = xdg-open
+else
+OPEN_CMD = open
+endif
 
 all: $(PROJECT_NAME).a
 
@@ -32,9 +37,10 @@ gcov_report:
 	gcc -c $(FLAGS) $(PROJECT_NAME)_test.c -o $(PROJECT_NAME)_test.o
 	gcc $(FLAGS) --coverage $(PROJECT_NAME)_test.o $(SRC) -o s21_test $(CHECKFL)
 	./s21_test
-	lcov -d ./ --capture --output-file s21_test.info
+	lcov --no-external -d ./ --capture --output-file s21_test.info
+	
 	genhtml s21_test.info --output-directory report
-	open report/index.html
+	$(OPEN_CMD) ./report/index.html
 	
 dvi:
 	cd docs/ && doxygen Doxyfile && open html/index.html & cd ..
@@ -47,11 +53,9 @@ clean:
 	cd docs; rm -rf html latex
 
 format: 
-	clang-format -style=Google -i *.c *.h
+	clang-format -style=Google -i *.c *.h *.cpp 
 
 style: 
-	clang-format -style=Google -n *.c *.h
+	clang-format -style=Google -n *.c *.h *.cpp 
 
-lib: clean $(PROJECT_NAME).a
-	gcc $(FLAGS) main.c $(PROJECT_NAME).a -lm
-	./a.out 
+

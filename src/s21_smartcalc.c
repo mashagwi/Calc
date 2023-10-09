@@ -531,7 +531,6 @@ int is_digit(char *str) {
   return res;
 }
 
-
 int push(S **stack, type_t type, int priority, double value) {
   if (type < number || type > cbracket) {
     return IncorrectType;
@@ -571,7 +570,6 @@ int pop(S **stack, S *Smp) {
 }
 
 int bush(S *stack, type_t type, int priority, double value) {
-  
   if (stack == NULL) {
     return POINTER_TO_NULL;
   }
