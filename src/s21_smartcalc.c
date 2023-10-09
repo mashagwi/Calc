@@ -498,24 +498,24 @@ int get_lexem(char **str, S **stack) {
 }
 
 int check_priority(type_t type) {
-  int response = -1;
+  int ret = -1;
   if ((type < number) || (type > cbracket)) {
-    response = -1;
+    ret = -1;
   } else if (type <= number) {
-    response = 0;
+    ret = 0;
   } else if (type <= omin) {
-    response = 1;
+    ret = 1;
   } else if (type <= omod) {
-    response = 2;
+    ret = 2;
   } else if (type <= opower) {
-    response = 3;
+    ret = 3;
   } else if (type <= olog) {
-    response = 4;
+    ret = 4;
   } else if (type <= cbracket) {
-    response = 5;
+    ret = 5;
   }
 
-  return response;
+  return ret;
 }
 
 int is_letter(char *str) {
@@ -531,35 +531,21 @@ int is_digit(char *str) {
   return res;
 }
 
-// void print_stack(S **stack) {
-//   S *current = *stack;
-//   while (current != NULL) {
-//     printf("Type:%d", current->type);
-//     if (current->type == number) printf("number:%f", current->value);
-//     printf("\n");
-
-//     current = current->next;
-//   }
-// }
 
 int push(S **stack, type_t type, int priority, double value) {
-  // Проверка корректности типа элемента
   if (type < number || type > cbracket) {
     return IncorrectType;
   }
 
-  // Выделение памяти под новый элемент
   S *new_element = calloc(1, sizeof(S));
   if (new_element == NULL) {
     return MEMORY_ALLOCATION_ERROR;
   }
 
-  // Инициализация нового элемента
   new_element->priority = priority;
   new_element->type = type;
   new_element->value = value;
 
-  // Добавление нового элемента в стек
   new_element->next = *stack;
   *stack = new_element;
 
@@ -567,55 +553,46 @@ int push(S **stack, type_t type, int priority, double value) {
 }
 
 int pop(S **stack, S *Smp) {
-  // Проверка наличия элементов в стеке
   if (*stack == NULL) {
     return POINTER_TO_NULL;
   }
 
-  // Извлечение значения из вершины стека
   S *stack_head = *stack;
   Smp->priority = stack_head->priority;
   Smp->type = stack_head->type;
   Smp->value = stack_head->value;
 
-  // Удаление верхнего элемента стека и обновление указателя на вершину стека
   *stack = stack_head->next;
   free(stack_head);
 
-  // Очистка ссылки на следующий элемент в буфере
   Smp->next = NULL;
 
   return OK;
 }
 
 int bush(S *stack, type_t type, int priority, double value) {
-  // Проверка корректности указателя на элемент стека
+  
   if (stack == NULL) {
     return POINTER_TO_NULL;
   }
 
-  // Проверка корректности типа элемента
   if (type < number || type > cbracket) {
     return IncorrectType;
   }
 
-  // Проверка корректности значения
   if (isnan(value) || isinf(value)) {
     return IncorrectType;
   }
 
-  // Выделение памяти под новый элемент
   S *new_element = calloc(1, sizeof(S));
   if (new_element == NULL) {
     return MEMORY_ALLOCATION_ERROR;
   }
 
-  // Инициализация нового элемента
   new_element->priority = priority;
   new_element->type = type;
   new_element->value = value;
 
-  // Вставка нового элемента в стек
   new_element->next = stack->next;
   stack->next = new_element;
 
